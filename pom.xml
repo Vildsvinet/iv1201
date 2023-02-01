@@ -26,6 +26,7 @@
 		<spotbugs.output.dir>${project.build.directory}/site/spotbugs</spotbugs.output.dir>
 		<maven.compiler.source>19</maven.compiler.source>
 		<maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
+		<start-class>se.kth.iv1201.example.Main</start-class>
 	</properties>
 
 	<dependencyManagement>

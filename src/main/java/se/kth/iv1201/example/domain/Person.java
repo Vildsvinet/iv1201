@@ -10,13 +10,15 @@ public class Person implements PersonDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Column(name = "PERSON_ID")
     private long id;
 
-    @PositiveOrZero(message = "{acct.balance.negative}")
+    @PositiveOrZero(message = "{...}")
     @Column(name = "USERNAME")
     private String username;
 
-    @PositiveOrZero(message = "{acct.balance.negative}")
+    @PositiveOrZero(message = "{...}")
     @Column(name = "PASSWORD")
     private String password;
 
@@ -24,6 +26,11 @@ public class Person implements PersonDTO {
      * Required by JPA, should not be used.
      */
     protected Person() {
+    }
+
+    public Person(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     @Override
