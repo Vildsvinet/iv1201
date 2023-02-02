@@ -1,4 +1,4 @@
-package se.kth.iv1201.example.repository.person;
+package se.kth.iv1201.example.presentation.person;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -7,10 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.ui.Model;
 import se.kth.iv1201.example.domain.Person; // temp solution, should autowire service layer instead, see bank sample
-
-import java.io.Console;
+import se.kth.iv1201.example.presentation.person.LoginForm;
 
 @Controller
 @Scope("session")

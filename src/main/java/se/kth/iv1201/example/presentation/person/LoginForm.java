@@ -1,4 +1,4 @@
-package se.kth.iv1201.example.repository.person;
+package se.kth.iv1201.example.presentation.person;
 
 import javax.validation.constraints.NotBlank;
 
