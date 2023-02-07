@@ -1,12 +1,12 @@
 package se.kth.iv1201.presentation.forms;
 
-//import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 
 public class LoginForm {
     private final String notBlankMessage = "Please write something.";
-//    @NotBlank(message = notBlankMessage)
+    @NotBlank(message = notBlankMessage)
     private String username;
-//    @NotBlank(message = notBlankMessage)
+    @NotBlank(message = notBlankMessage)
     private String password;
 
     public String getUsername() {
