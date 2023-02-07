@@ -8,13 +8,20 @@
 <p>Login page</p>
 <div>
     <form th:action="@{/login}" th:object="${loginForm}" method="post">
-        <p class="info">Please enter user credentials</p>
-        <input type="text" name="username" placeholder="Enter username">
-        <br>
-        <input type="password" name="password" placeholder="Enter password">
-        <br>
-        <button type="submit">Submit</button>
-        <input type="submit" value="Login">
+        <p>Please enter user credentials</p>
+        <p>
+<!--            TODO Use Labels with styling?-->
+<!--            <label>Username:-->
+                <input type="text" name="username" placeholder="Enter username">
+<!--            </label>-->
+        </p>
+        <p>
+<!--            <label>Password:-->
+                <input type="password" name="password" placeholder="Enter password">
+<!--            </label>-->
+        </p>
+        <button type="submit">Submit (Button)</button>
+        <input type="submit" value="Submit (Type)">
     </form>
 </div>
 </body>

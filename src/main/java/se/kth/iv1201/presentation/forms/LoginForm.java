@@ -6,7 +6,6 @@ public class LoginForm {
     private final String notBlankMessage = "Please write something.";
     @NotBlank(message = notBlankMessage)
     private String username;
-    @NotBlank(message = notBlankMessage)
     private String password;
 
     public String getUsername() {
