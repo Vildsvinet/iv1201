@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import se.kth.iv1201.presentation.forms.CreateAccountForm;
 import se.kth.iv1201.presentation.forms.LoginForm;
 
 @Controller
@@ -56,10 +57,11 @@ public class PersonController {
      * @return
      */
     @PostMapping("/createAccount")
-    public String createAccount() {
+    public String createAccount(Model model, CreateAccountForm createAccountForm) {
         // TODO Create account in DB. Possibly checking if account already exists with separate call / method.
         // TODO Hash the password when stored in DB.
         System.out.println("POST from createAccount");
         return "login";
     }
+
 }
