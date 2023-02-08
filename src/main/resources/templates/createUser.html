@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Account</title>
+</head>
+<body>
+<form th:action="@{/createUser}" th:object="${createUserForm}" method="post">
+  <p>
+    <input type="text" name="name" placeholder="Enter first name">
+  </p>
+  <p>
+    <input type="text" name="surname" placeholder="Enter last name">
+  </p>
+  <p>
+    <input type="text" name="pnr" placeholder="Enter person number">
+  </p>
+  <p>
+    <input type="email" name="email" placeholder="Enter email">
+  </p>
+  <p>
+    <input type="text" name="username" placeholder="Enter username">
+  </p>
+  <p>
+    <input type="password" name="password" placeholder="Enter password">
+  </p>
+  <button type="submit">Submit</button>
+</form>
+
+<section>
+  <h1>To Login </h1>
+  <form th:action="@{/login}"  method="get">
+    <div class="row button">
+      <input type="submit" value="Go to login page">
+    </div>
+  </form>
+</section>
+</body>
+</html>
