@@ -22,7 +22,6 @@ import javax.validation.Valid;
 public class PersonController {
 
     static final String DEFAULT_PAGE_URL = "/";
-
     static final String LOGIN_PAGE_URL = "login";
     static final String CREATE_USER_PAGE_URL = "createUser";
 
@@ -55,18 +54,22 @@ public class PersonController {
     }
 
     @PostMapping("/" + LOGIN_PAGE_URL)
-    public String login(@ModelAttribute(name="loginForm") Person person, Model m) {
-        System.out.println(person.getUsername());
-        String username = person.getUsername();
-        String password = person.getPassword();
+    public String login(@ModelAttribute(name="loginForm") LoginForm loginForm, Model m) {
+        System.out.println(loginForm.getUserName());
+        String username = loginForm.getUserName();
+        String password = loginForm.getPassword();
         // make db call here
-        if(username.equals("Admin") && password.equals("Admin@123")) {
-            m.addAttribute("username", username);
-            m.addAttribute("password", password);
-            return "application";
+        try{
+            service.loginPerson(username, password);
+        } catch(IllegalDatabaseAccessException ide){
+            m.addAttribute("error", ide.getMessage());
+            return LOGIN_PAGE_URL;
         }
-        m.addAttribute("error", "Incorrect Username & Password");
-        return LOGIN_PAGE_URL;
+        
+        m.addAttribute("username", username);
+        m.addAttribute("password", password);
+        return "application";
+
 
     }
 
@@ -83,14 +86,21 @@ public class PersonController {
         String password = createUserForm.getPassword();
         int role_id = 2;
         // make db call here
-        person = service.createPerson(createUserForm.getName(), createUserForm.getSurname(), createUserForm.getPnr(), createUserForm.getEmail(), createUserForm.getPassword(), role_id, createUserForm.getUsername());
-        if(person == null) {
-            m.addAttribute("error", "Incorrect Username & Password");
+        try {
+            person = service.createPerson(createUserForm.getName(), createUserForm.getSurname(), createUserForm.getPnr(), createUserForm.getEmail(), createUserForm.getPassword(), role_id, createUserForm.getUsername());
+        } catch(IllegalDatabaseAccessException ide){
+            if(ide.getMessage().equals("Username already exist.")) {
+                m.addAttribute("userNameError", "Username already exist.");
+            } else
+                m.addAttribute("error", "Something went wrong. Try again later.");
+            return CREATE_USER_PAGE_URL;
         }
+
         System.out.println(person.getUsername());
         System.out.println(person.getPassword());
 
-        return LOGIN_PAGE_URL;
+        m.addAttribute("success", "Registration successful!");
+        return CREATE_USER_PAGE_URL;
 
     }
 

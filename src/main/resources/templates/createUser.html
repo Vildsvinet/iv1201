@@ -21,11 +21,15 @@
   <p>
     <input type="text" name="username" placeholder="Enter username">
   </p>
+  <p th:if="${userNameError}" class="error"><p th:text="${userNameError}"></p></p>
   <p>
     <input type="password" name="password" placeholder="Enter password">
   </p>
+  <p th:if="${error}" class="error"><p th:text="${error}"></p></p>
   <button type="submit">Submit</button>
 </form>
+
+<p th:if="${success}" class="success"><p th:text="${success}"></p></p>
 
 <section>
   <h1>To Login </h1>
