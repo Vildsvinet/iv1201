@@ -72,22 +72,28 @@ public class PersonController {
      * Show create account view.
      * @return CreateAccount URL.
      */
-    @GetMapping("/createAccount")
-    public String showCreateAccountView() {
-        System.out.println("GET from createAccount");
-        return "createAccount";
+    @GetMapping("/" + CREATE_USER_PAGE_URL)
+    public String showCreateUserView() {
+        System.out.println("GET from createUser");
+        return CREATE_USER_PAGE_URL;
     }
 
-    /**
-     * createUserForm has been submitted.
-     * @return
-     */
-    @PostMapping("/createAccount")
-    public String createAccount(Model model, CreateUserForm createUserForm) {
-        // TODO Create account in DB. Possibly checking if account already exists with separate call / method.
-        // TODO Hash the password when stored in DB.
-        System.out.println("POST from createAccount");
-        return "login";
+    @PostMapping("/" + CREATE_USER_PAGE_URL)
+    public String createUser(@ModelAttribute(name="createUserForm") CreateUserForm createUserForm, Model m) throws IllegalDatabaseAccessException {
+        int role_id = 2;
+        // make db call here
+        try {
+            person = service.createPerson(createUserForm.getName(), createUserForm.getSurname(), createUserForm.getPnr(), createUserForm.getEmail(), createUserForm.getPassword(), role_id, createUserForm.getUsername());
+        } catch(IllegalDatabaseAccessException ide){
+            if(ide.getMessage().equals("Username already exist.")) {
+                m.addAttribute("userNameError", "Username already exist.");
+            } else
+                m.addAttribute("error", "Something went wrong. Try again later.");
+            return CREATE_USER_PAGE_URL;
+        }
+        m.addAttribute("success", "Registration successful!");
+        return CREATE_USER_PAGE_URL;
+
     }
 
 }
