@@ -1,11 +1,14 @@
-/*
-package se.kth.iv1201.example.presentation.person;
+package se.kth.iv1201.presentation.forms;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * A form bean for creating accounts.
+ */
 public class CreateUserForm {
-
-    @NotBlank(message = "...")
+    private final String notBlankMessage = "Please write something.";
+    @NotBlank(message = notBlankMessage)
+    // TODO Add more restrictions
     private String name;
     private String surname;
     private String pnr;
@@ -62,7 +65,4 @@ public class CreateUserForm {
     }
 
 
-
-
 }
-*/

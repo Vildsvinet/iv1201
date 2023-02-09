@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8"/>
     <title>Login</title>
 </head>
@@ -8,6 +9,7 @@
 <p>Login page</p>
 <div>
     <form th:action="@{/login}" th:object="${loginForm}" method="post">
+    <p th:if="${error}" class="error">UserName & Password Incorrect</p>
         <p>Please enter user credentials</p>
         <p>
 <!--            TODO Use Labels with styling?-->
@@ -24,5 +26,15 @@
         <input type="submit" value="Submit (Type)">
     </form>
 </div>
+
+<div>
+    <h1>Create account </h1>
+    <form th:action="@{/createUser}"  method="get">
+        <div class="row button">
+            <input type="submit" value="Create Account">
+        </div>
+    </form>
+</div>
+
 </body>
 </html>

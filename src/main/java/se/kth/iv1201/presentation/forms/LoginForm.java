@@ -2,6 +2,9 @@ package se.kth.iv1201.presentation.forms;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * A form bean for the login form.
+ */
 public class LoginForm {
     private final String notBlankMessage = "Please write something.";
     @NotBlank(message = notBlankMessage)

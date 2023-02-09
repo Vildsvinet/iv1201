@@ -1,3 +1,4 @@
+/*
 package se.kth.iv1201.example.presentation.person;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,23 +30,27 @@ public class PersonController {
 
     private PersonDTO person;
 
-    /**
+    */
+/**
      * No page is specified, redirect to the login page.
      *
      * @return A response that redirects the browser to the login page.
-     */
+     *//*
+
     @GetMapping(DEFAULT_PAGE_URL)
     public String showDefaultView() {
         //LOGGER.trace("Call to context root.");
         return "redirect:" + LOGIN_PAGE_URL;
     }
 
-    /**
+    */
+/**
      * A get request for the login page.
      *
      * @param loginForm Used in the login form.
      * @return The loginn page url.
-     */
+     *//*
+
     @GetMapping("/" + LOGIN_PAGE_URL)
     public String showLoginView(LoginForm loginForm) {
         //LOGGER.trace("Call to account selection view.");
@@ -68,8 +73,6 @@ public class PersonController {
         m.addAttribute("username", username);
         m.addAttribute("password", password);
         return "application";
-
-
     }
 
     @GetMapping("/" + CREATE_USER_PAGE_URL)
@@ -112,3 +115,4 @@ public class PersonController {
 
 
 }
+*/

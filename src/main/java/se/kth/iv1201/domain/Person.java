@@ -1,9 +1,7 @@
-/*
-package se.kth.iv1201.example.domain;
+package se.kth.iv1201.domain;
 
 
 import javax.persistence.*;
-import javax.validation.constraints.PositiveOrZero;
 
 @Entity // By annotating with entity I indicate to Spring that I will want to persist this class in a db
 @Table(name = "Person")
@@ -34,11 +32,9 @@ public class Person implements PersonDTO {
 
 
 
-    */
-/**
+    /**
      * Required by JPA, if there is a constructor with args, you must have a base constructor
-     *//*
-
+     */
     protected Person() {
     }
 
@@ -63,4 +59,3 @@ public class Person implements PersonDTO {
     }
 
 }
-*/

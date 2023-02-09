@@ -1,13 +1,13 @@
-package se.kth.iv1201.example.application;
+package se.kth.iv1201.application;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import se.kth.iv1201.example.domain.IllegalDatabaseAccessException;
-import se.kth.iv1201.example.domain.Person;
-import se.kth.iv1201.example.domain.PersonDTO;
-import se.kth.iv1201.example.repository.PersonRepository;
+import se.kth.iv1201.domain.IllegalDatabaseAccessException;
+import se.kth.iv1201.domain.Person;
+import se.kth.iv1201.domain.PersonDTO;
+import se.kth.iv1201.repository.PersonRepository;
 
 @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
 @Service
