@@ -52,12 +52,11 @@ public class PersonController {
      */
     @PostMapping("/" + LOGIN_PAGE_URL)
     public String login(@ModelAttribute(name="loginForm") LoginForm loginForm, Model m) {
-        System.out.println(loginForm.getUsername());
         String username = loginForm.getUsername();
         String password = loginForm.getPassword();
         // make db call here
         try{
-            service.loginPerson(username, password);
+            service.loginPerson(loginForm.getUsername(), loginForm.getPassword());
         } catch(IllegalDatabaseAccessException ide){
             m.addAttribute("error", ide.getMessage());
             return LOGIN_PAGE_URL;
