@@ -1,40 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+
+    <meta charset="UTF-8"/>
     <title>Login</title>
 </head>
 <body>
-
-<section>
-    <h1>Login </h1>
-    <p class="info">Please enter user credentials</p>
-
+<p>Login page</p>
+<div>
     <form th:action="@{/login}" th:object="${loginForm}" method="post">
-        <p th:if="${error}" class="error">UserName & Password Incorrect</p>
-        <div class="row">
-
-            <input type="text" name="username">
-        </div>
-        <div class="row">
-
-            <input type="password" name="password">
-        </div>
-        <div class="row button">
-            <input type="submit" value="Login">
-        </div>
+    <p th:if="${error}" class="error">UserName & Password Incorrect</p>
+        <p>Please enter user credentials</p>
+        <p>
+<!--            TODO Use Labels with styling?-->
+<!--            <label>Username:-->
+                <input type="text" name="username" placeholder="Enter username">
+<!--            </label>-->
+        </p>
+        <p>
+<!--            <label>Password:-->
+                <input type="password" name="password" placeholder="Enter password">
+<!--            </label>-->
+        </p>
+        <button type="submit">Submit (Button)</button>
+        <input type="submit" value="Submit (Type)">
     </form>
+</div>
 
-</section>
-<section>
+<div>
     <h1>Create account </h1>
     <form th:action="@{/createUser}"  method="get">
         <div class="row button">
             <input type="submit" value="Create Account">
         </div>
     </form>
-</section>
-
+</div>
 
 </body>
 </html>
