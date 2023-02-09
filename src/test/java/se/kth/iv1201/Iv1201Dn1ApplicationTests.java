@@ -1,4 +1,4 @@
-package se.kth.iv1201.example;
+package se.kth.iv1201;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
