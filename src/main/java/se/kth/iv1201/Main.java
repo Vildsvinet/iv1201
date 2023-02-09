@@ -12,5 +12,4 @@ public class Main {
     public static void main(String[] args) {
         SpringApplication.run(se.kth.iv1201.Main.class, args);
     }
-
 }

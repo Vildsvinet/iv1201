@@ -1,7 +1,8 @@
 package se.kth.iv1201.domain;
 
 
-import javax.persistence.*;
+//import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity // By annotating with entity I indicate to Spring that I will want to persist this class in a db
 @Table(name = "Person")
@@ -13,24 +14,16 @@ public class Person implements PersonDTO {
     @Column(name = "PERSON_ID")
     private int id;
 
-
     @Column(name = "USERNAME")
     private String username;
 
-
     @Column(name = "PASSWORD")
     private String password;
-
     private String name;
     private String surname;
-
     private String pnr;
-
     private String email;
-
     private int role_id;
-
-
 
     /**
      * Required by JPA, if there is a constructor with args, you must have a base constructor
