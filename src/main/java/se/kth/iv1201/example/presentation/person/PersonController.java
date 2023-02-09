@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import se.kth.iv1201.example.application.RecruitmentService;
 import se.kth.iv1201.example.domain.IllegalDatabaseAccessException;
-import se.kth.iv1201.example.domain.Person; // temp solution, should autowire service layer instead, see bank sample
 import se.kth.iv1201.example.domain.PersonDTO;
 import se.kth.iv1201.example.presentation.person.LoginForm;
 
@@ -65,7 +64,7 @@ public class PersonController {
             m.addAttribute("error", ide.getMessage());
             return LOGIN_PAGE_URL;
         }
-        
+
         m.addAttribute("username", username);
         m.addAttribute("password", password);
         return "application";

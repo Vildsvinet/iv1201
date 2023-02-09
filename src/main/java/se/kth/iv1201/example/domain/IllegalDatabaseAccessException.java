@@ -2,11 +2,9 @@ package se.kth.iv1201.example.domain;
 
 /**
  * Thrown whenever an attempt is made to perform a transaction that is not
- * allowed by the bank's business rules.
+ * allowed by the business rules of the recruitment application.
  */
 public class IllegalDatabaseAccessException extends Exception {
-    private static final long serialVersionUID = 6355945960847848819L;
-
     /**
      * Creates a new instance with the specified message.
      *
