@@ -1,6 +1,7 @@
 package se.kth.iv1201.presentation.person;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,8 +13,10 @@ import se.kth.iv1201.domain.PersonDTO;
 import se.kth.iv1201.presentation.forms.CreateUserForm;
 import se.kth.iv1201.presentation.forms.LoginForm;
 
+import javax.validation.Valid;
+
 @Controller
-// TODO Scope?
+@Scope("session")
 public class PersonController {
     static final String DEFAULT_PAGE_URL = "/";
     static final String LOGIN_PAGE_URL = "login";

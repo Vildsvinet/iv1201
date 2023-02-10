@@ -9,7 +9,13 @@ import se.kth.iv1201.domain.Person;
 import se.kth.iv1201.domain.PersonDTO;
 import se.kth.iv1201.repository.PersonRepository;
 
-@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
+/**
+ * Transactions:
+ * All code in this class will be managed in a transaction.
+ * Transaction starts when code in this class is called, and ends when these defined methods return or
+ * are subject to transaction rollback.
+ */
+@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)   // rollback when any exception in transaction happens.
 @Service
 public class RecruitmentService {
 

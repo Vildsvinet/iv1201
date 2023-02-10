@@ -10,23 +10,15 @@ import se.kth.iv1201.domain.Person;
 import java.util.List;
 
 /**
- * Contains all database access concerning persons.
+ * This is a repository that is called from the service layer.
+ *
+ * Transaction management:
+ * using Spring's Transaction manager and applying a rule that, only current transactions
+ * can call code contained in this repo. Otherwise, an exception will be thrown.
  */
 @Repository
-@Transactional(propagation = Propagation.MANDATORY) // Applies only to methods
+@Transactional(propagation = Propagation.MANDATORY)
 public interface PersonRepository extends JpaRepository<Person, Integer> {
-    /**
-     * Returns the person with the specified username, or null if there is no
-     * such username.
-     *
-     * @param username The username of the Person to search for.
-     * @return The Person with the specified username, or null if there is no
-     *         such Person.
-     * @throws IncorrectResultSizeDataAccessException If more than one username with
-     *                                                the specified username was
-     *                                                found.
-     */
-
 
     Person findPersonByUsername(String username);
     @Override
