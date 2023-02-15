@@ -1,7 +1,5 @@
 package se.kth.iv1201.domain;
 
-
-//import javax.persistence.*;
 import jakarta.persistence.*;
 
 @Entity // By annotating with entity I indicate to Spring that I will want to persist this class in a db
@@ -51,4 +49,7 @@ public class Person implements PersonDTO {
         return password;
     }
 
+    public int getRole_id() {
+        return role_id;
+    }
 }

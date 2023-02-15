@@ -9,6 +9,8 @@ import se.kth.iv1201.domain.Person;
 import se.kth.iv1201.domain.PersonDTO;
 import se.kth.iv1201.repository.PersonRepository;
 
+import java.util.Optional;
+
 /**
  * Transactions:
  * All code in this class will be managed in a transaction.
@@ -23,18 +25,18 @@ public class RecruitmentService {
     private PersonRepository personRepo;
 
     public PersonDTO createPerson(String name, String surname, String pnr, String email, String password, int role_id, String username ) throws IllegalDatabaseAccessException {
-        Person personEntity = personRepo.findPersonByUsername(username);
-        if (personEntity != null) {
+        Optional<Person> personEntity = personRepo.findPersonByUsername(username);
+        if (personEntity.isPresent()) {
             throw new IllegalDatabaseAccessException("Username already exist.");
         }
         return personRepo.save(new Person(name, surname, pnr, email, password, role_id, username));
     }
 
-    public PersonDTO loginPerson(String username, String password ) throws IllegalDatabaseAccessException {
-        Person personEntity = personRepo.findPersonByUsername(username);
-        if (personEntity == null) {
+    public Optional<Person> loginPerson(String username, String password ) throws IllegalDatabaseAccessException {
+        Optional<Person> personEntity = personRepo.findPersonByUsername(username);
+        if (personEntity.isEmpty()) {
             throw new IllegalDatabaseAccessException("Username does not exist.");
-        } else if(personEntity.getUsername().equals(username) && personEntity.getPassword().equals(password)){
+        } else if(personEntity.map(Person::getUsername).get().equals(username) && personEntity.map(Person::getPassword).get().equals(password)){
             return personEntity;
         } else
             throw new IllegalDatabaseAccessException("Incorrect username and/or password.");

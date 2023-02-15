@@ -23,6 +23,7 @@ public class PersonController {
     static final String CREATE_USER_PAGE_URL = "createUser";
     static final String HOME_PAGE_URL = "home";
     static final String HELLO_PAGE_URL = "hello";
+    static final String REVIEW_PAGE_URL = "review";
 
     @Autowired
     private RecruitmentService service;
@@ -57,6 +58,15 @@ public class PersonController {
     }
 
     /**
+     * Redirection to hello page.
+     * @return Redirect to hello page.
+     */
+    @GetMapping("/review")
+    public String showReviewView() {
+        return REVIEW_PAGE_URL;
+    }
+
+    /**
      * A get request for the login page.
      *
      * @param loginForm Used in the login form.
@@ -78,12 +88,12 @@ public class PersonController {
 //        String username = loginForm.getUsername();
 //        String password = loginForm.getPassword();
 //        // make db call here
-//        try{
-//            service.loginPerson(loginForm.getUsername(), loginForm.getPassword());
-//        } catch(IllegalDatabaseAccessException ide){
-//            m.addAttribute("error", ide.getMessage());
-//            return LOGIN_PAGE_URL;
-//        }
+        try{
+            service.loginPerson(loginForm.getUsername(), loginForm.getPassword());
+        } catch(IllegalDatabaseAccessException ide){
+            m.addAttribute("error", ide.getMessage());
+            return LOGIN_PAGE_URL;
+        }
 //
 //        m.addAttribute("username", username);
 //        m.addAttribute("password", password);
