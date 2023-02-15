@@ -8,13 +8,14 @@ import org.springframework.security.config.annotation.web.configurers.LogoutConf
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.SecurityFilterChain;
+import se.kth.iv1201.application.RecruitmentService;
 import se.kth.iv1201.domain.Person;
 import se.kth.iv1201.repository.PersonRepository;
 
 import java.util.Optional;
 
+import static se.kth.iv1201.presentation.person.PersonController.DEFAULT_PAGE_URL;
 import static se.kth.iv1201.presentation.person.PersonController.LOGIN_PAGE_URL;
 
 @Configuration
@@ -41,27 +42,25 @@ public class WebSecurityConfig {
                 .formLogin((form) -> form
                         .loginPage("/" + LOGIN_PAGE_URL)
                         .permitAll()
+                        .defaultSuccessUrl(DEFAULT_PAGE_URL, false)
                 )
                 .logout(LogoutConfigurer::permitAll);
+
 
         return http.build();
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
-        return username -> personRepository.findPersonByUsername(username)
-                .map(person -> User.withUsername(person.getUsername())
-//                        .password(person.getPassword())
-                        .password(getUnencryptedPassword(username))
-                        .authorities(getAuthority(person))
-                        .build())
-                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+    public UserDetailsService userDetailsService(RecruitmentService recruitmentService) {
+        return username -> User.withUsername(username)
+                .password(getUnencryptedPassword(recruitmentService.getPersonByUsername(username)))
+                .authorities(getAuthority(recruitmentService.getPersonByUsername(username)))
+                .build();
     }
 
     // TODO Map a password encoder instead
-    private String getUnencryptedPassword(String username) {
-        Optional<Person> user = personRepository.findPersonByUsername(username);
-        String password = user.map(Person::getPassword).get();
+    private String getUnencryptedPassword(Person person) {
+        String password = person.getPassword();
         String noop = "{noop}";
         return noop+password;
     }

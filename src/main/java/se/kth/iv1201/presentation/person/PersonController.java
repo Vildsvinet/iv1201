@@ -18,7 +18,7 @@ import javax.validation.Valid;
 @Controller
 @Scope("session")
 public class PersonController {
-    static final String DEFAULT_PAGE_URL = "/";
+    public static final String DEFAULT_PAGE_URL = "/";
     public static final String LOGIN_PAGE_URL = "login";
     static final String CREATE_USER_PAGE_URL = "createUser";
     static final String HOME_PAGE_URL = "home";
@@ -86,7 +86,7 @@ public class PersonController {
     @PostMapping("/" + LOGIN_PAGE_URL)
     public String login(@ModelAttribute(name="loginForm") LoginForm loginForm, Model m) {
         System.out.println("POST from login. Unexpected, should be handled by Spring Security.");
-        return "home";
+        return DEFAULT_PAGE_URL;
     }
 
     /**
