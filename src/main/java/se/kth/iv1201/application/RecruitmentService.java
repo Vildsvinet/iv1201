@@ -2,6 +2,7 @@ package se.kth.iv1201.application;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,8 @@ import java.util.Optional;
 @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)   // rollback when any exception in transaction happens.
 @Service
 public class RecruitmentService {
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     private PersonRepository personRepository;
@@ -30,7 +33,7 @@ public class RecruitmentService {
         if (personEntity.isPresent()) {
             throw new IllegalDatabaseAccessException("Username already exist.");
         }
-        return personRepository.save(new Person(name, surname, pnr, email, password, role_id, username));
+        return personRepository.save(new Person(name, surname, pnr, email, passwordEncoder.encode(password), role_id, username));
     }
 
     public Person getPersonByUsername(String username) {
