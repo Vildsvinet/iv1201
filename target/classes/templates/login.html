@@ -6,29 +6,42 @@
     <title>Login</title>
 </head>
 <body>
-<p>Login page</p>
+<h1>Login page</h1>
 <div>
     <form th:action="@{/login}" th:object="${loginForm}" method="post">
-    <p th:if="${error}" class="error">UserName & Password Incorrect</p>
-        <p>Please enter user credentials</p>
-        <p>
-<!--            TODO Use Labels with styling?-->
-<!--            <label>Username:-->
-                <input type="text" name="username" placeholder="Enter username">
-<!--            </label>-->
+<!--        TODO Is model error ever used anymore?      -->
+        <p th:if="${error}" class="error">
+            MODEL ERROR: Invalid username or password.
         </p>
         <p>
-<!--            <label>Password:-->
-                <input type="password" name="password" placeholder="Enter password">
-<!--            </label>-->
+            Please enter user credentials
+        </p>
+        <div th:if="${param.error}">
+            Invalid username and password.
+        </div>
+        <div th:if="${param.logout}">
+            You have been logged out.
+        </div>
+        <p>
+            <!--            TODO Use Labels with styling?-->
+            <!--            <label>Username:-->
+            <input type="text" name="username" placeholder="Enter username">
+            <!--            </label>-->
+        </p>
+        <p>
+            <!--            <label>Password:-->
+            <input type="password" name="password" placeholder="Enter password">
+            <!--            </label>-->
         </p>
         <button type="submit">Submit</button>
     </form>
 </div>
 
+
+
 <div>
     <h1>Create account </h1>
-    <form th:action="@{/createUser}"  method="get">
+    <form th:action="@{/createUser}" method="get">
         <div class="row button">
             <input type="submit" value="Create Account">
         </div>

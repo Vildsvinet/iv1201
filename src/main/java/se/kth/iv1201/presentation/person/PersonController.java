@@ -18,9 +18,12 @@ import javax.validation.Valid;
 @Controller
 @Scope("session")
 public class PersonController {
-    static final String DEFAULT_PAGE_URL = "/";
-    static final String LOGIN_PAGE_URL = "login";
+    public static final String DEFAULT_PAGE_URL = "/";
+    public static final String LOGIN_PAGE_URL = "login";
     static final String CREATE_USER_PAGE_URL = "createUser";
+    static final String HOME_PAGE_URL = "home";
+    static final String HELLO_PAGE_URL = "hello";
+    static final String REVIEW_PAGE_URL = "review";
 
     @Autowired
     private RecruitmentService service;
@@ -33,7 +36,34 @@ public class PersonController {
      */
     @GetMapping("/")
     public String showDefaultView() {
-        return "redirect:" + LOGIN_PAGE_URL;
+        return "redirect:" + HOME_PAGE_URL;
+    }
+
+    /**
+     * Redirection to home page.
+     * @return Redirect to home page.
+     */
+    @GetMapping("/home")
+    public String showHomeView() {
+        return HOME_PAGE_URL;
+    }
+
+    /**
+     * Redirection to hello page.
+     * @return Redirect to hello page.
+     */
+    @GetMapping("/hello")
+    public String showHelloView() {
+        return HELLO_PAGE_URL;
+    }
+
+    /**
+     * Redirection to hello page.
+     * @return Redirect to hello page.
+     */
+    @GetMapping("/review")
+    public String showReviewView() {
+        return REVIEW_PAGE_URL;
     }
 
     /**
@@ -48,26 +78,15 @@ public class PersonController {
     }
 
     /**
-     * Form submission on login page
+     * Form submission on login page. Deprecated.
      * @param
      * @param loginForm
      * @return Login page URL.
      */
     @PostMapping("/" + LOGIN_PAGE_URL)
     public String login(@ModelAttribute(name="loginForm") LoginForm loginForm, Model m) {
-        String username = loginForm.getUsername();
-        String password = loginForm.getPassword();
-        // make db call here
-        try{
-            service.loginPerson(loginForm.getUsername(), loginForm.getPassword());
-        } catch(IllegalDatabaseAccessException ide){
-            m.addAttribute("error", ide.getMessage());
-            return LOGIN_PAGE_URL;
-        }
-
-        m.addAttribute("username", username);
-        m.addAttribute("password", password);
-        return "application";
+        System.out.println("POST from login. Unexpected, should be handled by Spring Security.");
+        return DEFAULT_PAGE_URL;
     }
 
     /**
