@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,11 +15,16 @@ import se.kth.iv1201.repository.PersonRepository;
 
 import java.util.Optional;
 
+import static se.kth.iv1201.presentation.person.PersonController.LOGIN_PAGE_URL;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
 
     private final PersonRepository personRepository;
+    private static final String ROLE_APPLICANT = "ROLE_APPLICANT";
+    private static final String ROLE_RECRUITER = "ROLE_RECRUITER";
+    private static final String ROLE_ADMIN = "ROLE_ADMIN";
 
     public WebSecurityConfig(PersonRepository personRepository) {
         this.personRepository = personRepository;
@@ -29,14 +35,14 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/", "/home", "/createUser").permitAll()
-                        .requestMatchers("/review").hasAuthority("ROLE_ELEVATED")
+                        .requestMatchers("/review").hasAuthority(ROLE_RECRUITER)
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
-                        .loginPage("/login")
+                        .loginPage("/" + LOGIN_PAGE_URL)
                         .permitAll()
                 )
-                .logout((logout) -> logout.permitAll());
+                .logout(LogoutConfigurer::permitAll);
 
         return http.build();
     }
@@ -65,9 +71,9 @@ public class WebSecurityConfig {
     private SimpleGrantedAuthority getAuthority(Person person) {
         System.out.println("Role ID: " + person.getRole_id());
         String roleName = switch (person.getRole_id()) {
-            case 0 -> "ROLE_ADMIN";
-            case 1 -> "ROLE_ELEVATED";
-            case 2 -> "ROLE_USER";
+            case 0 -> ROLE_ADMIN;
+            case 1 -> ROLE_RECRUITER;
+            case 2 -> ROLE_APPLICANT;
             default -> throw new IllegalArgumentException("Invalid role id: " + person.getRole_id());
         };
         return new SimpleGrantedAuthority(roleName);

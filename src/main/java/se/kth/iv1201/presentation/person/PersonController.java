@@ -19,7 +19,7 @@ import javax.validation.Valid;
 @Scope("session")
 public class PersonController {
     static final String DEFAULT_PAGE_URL = "/";
-    static final String LOGIN_PAGE_URL = "login";
+    public static final String LOGIN_PAGE_URL = "login";
     static final String CREATE_USER_PAGE_URL = "createUser";
     static final String HOME_PAGE_URL = "home";
     static final String HELLO_PAGE_URL = "hello";
