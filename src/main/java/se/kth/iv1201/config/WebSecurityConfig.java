@@ -63,13 +63,10 @@ public class WebSecurityConfig {
         Optional<Person> user = personRepository.findPersonByUsername(username);
         String password = user.map(Person::getPassword).get();
         String noop = "{noop}";
-        System.out.println("Username: " + username);
-        System.out.println("Password: " + password);
         return noop+password;
     }
 
     private SimpleGrantedAuthority getAuthority(Person person) {
-        System.out.println("Role ID: " + person.getRole_id());
         String roleName = switch (person.getRole_id()) {
             case 0 -> ROLE_ADMIN;
             case 1 -> ROLE_RECRUITER;
