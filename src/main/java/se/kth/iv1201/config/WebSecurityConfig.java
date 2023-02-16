@@ -8,12 +8,10 @@ import org.springframework.security.config.annotation.web.configurers.LogoutConf
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import se.kth.iv1201.application.RecruitmentService;
-import se.kth.iv1201.domain.Person;
-import se.kth.iv1201.repository.PersonRepository;
-
-import java.util.Optional;
 
 import static se.kth.iv1201.presentation.person.PersonController.DEFAULT_PAGE_URL;
 import static se.kth.iv1201.presentation.person.PersonController.LOGIN_PAGE_URL;
@@ -22,13 +20,12 @@ import static se.kth.iv1201.presentation.person.PersonController.LOGIN_PAGE_URL;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-    private final PersonRepository personRepository;
     private static final String ROLE_APPLICANT = "ROLE_APPLICANT";
     private static final String ROLE_RECRUITER = "ROLE_RECRUITER";
     private static final String ROLE_ADMIN = "ROLE_ADMIN";
 
-    public WebSecurityConfig(PersonRepository personRepository) {
-        this.personRepository = personRepository;
+    public WebSecurityConfig() {
+
     }
 
     @Bean
@@ -53,27 +50,28 @@ public class WebSecurityConfig {
     @Bean
     public UserDetailsService userDetailsService(RecruitmentService recruitmentService) {
         return username -> User.withUsername(username)
-                .password(getUnencryptedPassword(recruitmentService.getPersonByUsername(username)))
-                .authorities(getAuthority(recruitmentService.getPersonByUsername(username)))
+                .password(recruitmentService.getPersonByUsername(username).getPassword())
+                .authorities(getAuthority(recruitmentService.getPersonByUsername(username).getRole_id()))
                 .build();
     }
 
-    // TODO Map a password encoder instead
-    private String getUnencryptedPassword(Person person) {
-        String password = person.getPassword();
-        String noop = "{noop}";
-        return noop+password;
+    /**
+     * Encodes passwords using BCrypt. DelegatingPasswordEncoder is more flexible, but we're only supporting BCrypt.
+     * @return The BCrypt password encoder.
+     */
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
-    private SimpleGrantedAuthority getAuthority(Person person) {
-        String roleName = switch (person.getRole_id()) {
+    private SimpleGrantedAuthority getAuthority(int id) {
+        String roleName = switch (id) {
             case 0 -> ROLE_ADMIN;
             case 1 -> ROLE_RECRUITER;
             case 2 -> ROLE_APPLICANT;
-            default -> throw new IllegalArgumentException("Invalid role id: " + person.getRole_id());
+            default -> throw new IllegalArgumentException("Invalid role id: " + id);
         };
         return new SimpleGrantedAuthority(roleName);
     }
 
 }
-
