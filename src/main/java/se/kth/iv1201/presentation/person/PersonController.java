@@ -1,9 +1,11 @@
 package se.kth.iv1201.presentation.person;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,8 +14,6 @@ import se.kth.iv1201.domain.IllegalDatabaseAccessException;
 import se.kth.iv1201.domain.PersonDTO;
 import se.kth.iv1201.presentation.forms.CreateUserForm;
 import se.kth.iv1201.presentation.forms.LoginForm;
-
-import javax.validation.Valid;
 
 @Controller
 @Scope("session")
@@ -94,13 +94,26 @@ public class PersonController {
      * @return CreateAccount URL.
      */
     @GetMapping("/" + CREATE_USER_PAGE_URL)
-    public String showCreateUserView() {
+    public String showCreateUserView(CreateUserForm createUserForm) {
         System.out.println("GET from createUser");
         return CREATE_USER_PAGE_URL;
     }
 
+    /**
+     * Endpoint for handling the submission and validation of the form entered by the user.
+     * @param createUserForm The form to be validated and processed.
+     * @param bindingResult Used for checking validation errors.
+     * @param m Used for binding attributes to the view that can be rendered.
+     * @return  returns the form with status messages.
+     * @throws IllegalDatabaseAccessException thrown whenever business logic of action is not permitted.
+     */
     @PostMapping("/" + CREATE_USER_PAGE_URL)
-    public String createUser(@ModelAttribute(name="createUserForm") CreateUserForm createUserForm, Model m) throws IllegalDatabaseAccessException {
+    public String createUser(@Valid CreateUserForm createUserForm, BindingResult bindingResult, Model m) throws IllegalDatabaseAccessException {
+        if(bindingResult.hasErrors()){
+            m.addAttribute("createUserForm", createUserForm);
+            return CREATE_USER_PAGE_URL;
+        }
+
         int role_id = 2;
         // make db call here
         try {

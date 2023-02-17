@@ -7,23 +7,29 @@
 <body>
 <form th:action="@{/createUser}" th:object="${createUserForm}" method="post">
   <p>
-    <input type="text" name="name" placeholder="Enter first name">
+    <input type="text" th:field="*{name}" name="name" placeholder="Enter first name">
+    <span class="error" th:if="${#fields.hasErrors('name')}">Invalid name</span>
   </p>
   <p>
-    <input type="text" name="surname" placeholder="Enter last name">
+    <input type="text" th:field="*{surname}" name="surname" placeholder="Enter last name">
+  <span class="error" th:if="${#fields.hasErrors('surname')}">Invalid surname</span>
   </p>
   <p>
-    <input type="text" name="pnr" placeholder="Enter person number">
+    <input type="text" th:field="*{pnr}" name="pnr" placeholder="Enter person number">
+    <span class="error" th:if="${#fields.hasErrors('pnr')}">Invalid person number</span>
   </p>
   <p>
-    <input type="email" name="email" placeholder="Enter email">
+    <input type="email" th:field="*{email}" name="email" placeholder="Enter email">
+    <span class="error" th:if="${#fields.hasErrors('email')}">Invalid email</span>
   </p>
   <p>
-    <input type="text" name="username" placeholder="Enter username">
+    <input type="text" th:field="*{username}" name="username" placeholder="Enter username">
+    <span class="error" th:if="${#fields.hasErrors('username')}">Invalid username</span>
   </p>
   <p th:if="${userNameError}" class="error"><p th:text="${userNameError}"></p></p>
   <p>
-    <input type="password" name="password" placeholder="Enter password">
+    <input type="password" th:field="*{password}" name="password" placeholder="Enter password">
+    <span class="error" th:if="${#fields.hasErrors('password')}">Invalid password</span>
   </p>
   <p th:if="${error}" class="error"><p th:text="${error}"></p></p>
   <button type="submit">Submit</button>
