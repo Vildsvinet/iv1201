@@ -1,6 +1,10 @@
 package se.kth.iv1201.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity // By annotating with entity I indicate to Spring that I will want to persist this class in a db
 @Table(name = "Person")
@@ -12,14 +16,31 @@ public class Person implements PersonDTO {
     @Column(name = "PERSON_ID")
     private int id;
 
+    @NotBlank()
+    @Size(min = 2, max = 50)
     @Column(name = "USERNAME")
     private String username;
 
+    @NotBlank()
+    @Size(min = 4, max = 25)
     @Column(name = "PASSWORD")
     private String password;
+
+    @NotBlank()
+    @Size(min = 2, max = 50)
     private String name;
+
+    @NotBlank()
+    @Size(min = 2, max = 50)
     private String surname;
+
+    @NotBlank()
+    @Pattern(regexp = "\\d{8}[-\\.]\\d{4}")
     private String pnr;
+
+    @NotBlank()
+    @Email
+    @Size(min = 3, max = 50)
     private String email;
     private int role_id;
 

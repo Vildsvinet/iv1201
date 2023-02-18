@@ -118,8 +118,8 @@ public class PersonController {
         // make db call here
         try {
             person = service.createPerson(createUserForm.getName(), createUserForm.getSurname(), createUserForm.getPnr(), createUserForm.getEmail(), createUserForm.getPassword(), role_id, createUserForm.getUsername());
-        } catch(IllegalDatabaseAccessException ide){
-            if(ide.getMessage().equals("Username already exist.")) {
+        } catch(Exception e){
+            if(e.getMessage().equals("Username already exist.")) {
                 m.addAttribute("userNameError", "Username already exist.");
             } else
                 m.addAttribute("error", "Something went wrong. Try again later.");
