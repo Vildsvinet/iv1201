@@ -8,6 +8,7 @@ class Iv1201Dn1ApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }

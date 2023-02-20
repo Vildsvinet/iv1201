@@ -21,9 +21,8 @@ public class PersonController {
     public static final String DEFAULT_PAGE_URL = "/";
     public static final String LOGIN_PAGE_URL = "login";
     static final String CREATE_USER_PAGE_URL = "createUser";
-    static final String HOME_PAGE_URL = "home";
-    static final String HELLO_PAGE_URL = "hello";
-    static final String REVIEW_PAGE_URL = "review";
+    static final String HOME_APPLICANT_URL = "homeApplicant";
+    static final String HOME_RECRUITER_URL = "homeRecruiter";
 
     @Autowired
     private RecruitmentService service;
@@ -36,34 +35,25 @@ public class PersonController {
      */
     @GetMapping("/")
     public String showDefaultView() {
-        return "redirect:" + HOME_PAGE_URL;
+        return "redirect:" + LOGIN_PAGE_URL;
     }
 
     /**
-     * Redirection to home page.
+     * Redirection to applicant home page.
      * @return Redirect to home page.
      */
-    @GetMapping("/home")
+    @GetMapping("/homeApplicant")
     public String showHomeView() {
-        return HOME_PAGE_URL;
+        return HOME_APPLICANT_URL;
     }
 
     /**
-     * Redirection to hello page.
+     * Redirection to recruiter home page.
      * @return Redirect to hello page.
      */
-    @GetMapping("/hello")
-    public String showHelloView() {
-        return HELLO_PAGE_URL;
-    }
-
-    /**
-     * Redirection to hello page.
-     * @return Redirect to hello page.
-     */
-    @GetMapping("/review")
+    @GetMapping("/homeRecruiter")
     public String showReviewView() {
-        return REVIEW_PAGE_URL;
+        return HOME_RECRUITER_URL;
     }
 
     /**
@@ -77,17 +67,9 @@ public class PersonController {
         return LOGIN_PAGE_URL;
     }
 
-    /**
-     * Form submission on login page. Deprecated.
-     * @param
-     * @param loginForm
-     * @return Login page URL.
+    /*
+    *   Post requests to login page are handled by Spring Security
      */
-    @PostMapping("/" + LOGIN_PAGE_URL)
-    public String login(@ModelAttribute(name="loginForm") LoginForm loginForm, Model m) {
-        System.out.println("POST from login. Unexpected, should be handled by Spring Security.");
-        return DEFAULT_PAGE_URL;
-    }
 
     /**
      * Show create account view.
