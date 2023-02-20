@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -28,18 +29,36 @@ public class WebSecurityConfig {
 
     }
 
+    /**
+     * Sets up the security filter chain. This is the entry point into the Spring Security configuration.
+     * @param http The HttpSecurity object to configure.
+     * @return The security filter chain.
+     * @throws Exception If an error occurs.
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/home", "/createUser").permitAll()
-                        .requestMatchers("/review").hasAuthority(ROLE_RECRUITER)
+                        .requestMatchers("/", "/login", "/createUser").permitAll()
+                        .requestMatchers("/homeRecruiter").hasAuthority(ROLE_RECRUITER)
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
                         .loginPage("/" + LOGIN_PAGE_URL)
                         .permitAll()
                         .defaultSuccessUrl(DEFAULT_PAGE_URL, false)
+                        .successHandler((req, res, auth) -> {
+                            for (GrantedAuthority authority : auth.getAuthorities()) {
+                                if (authority.getAuthority().equals("ROLE_APPLICANT")) {
+                                    res.sendRedirect("/homeApplicant"); // Redirect to applicant home page
+                                    return;
+                                } else if (authority.getAuthority().equals("ROLE_RECRUITER")) {
+                                    res.sendRedirect("/homeRecruiter"); // Redirect to recruiter home page
+                                    return;
+                                }
+                            }
+                            throw new IllegalStateException("User has no role assigned");
+                        })
                 )
                 .logout(LogoutConfigurer::permitAll);
 

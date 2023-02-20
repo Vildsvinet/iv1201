@@ -22,7 +22,7 @@ public class Person implements PersonDTO {
     private String username;
 
     @NotBlank()
-    @Size(min = 4, max = 25)
+    @Size(min = 4, max = 255)
     @Column(name = "PASSWORD")
     private String password;
 
