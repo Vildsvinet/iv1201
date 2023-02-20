@@ -14,8 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import se.kth.iv1201.application.RecruitmentService;
 
-import static se.kth.iv1201.presentation.person.PersonController.DEFAULT_PAGE_URL;
-import static se.kth.iv1201.presentation.person.PersonController.LOGIN_PAGE_URL;
+import static se.kth.iv1201.presentation.person.PersonController.*;
 
 @Configuration
 @EnableWebSecurity
@@ -39,8 +38,8 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/login", "/createUser").permitAll()
-                        .requestMatchers("/homeRecruiter").hasAuthority(ROLE_RECRUITER)
+                        .requestMatchers("/", "/" + LOGIN_PAGE_URL, "/" + CREATE_USER_PAGE_URL).permitAll()
+                        .requestMatchers("/" + HOME_RECRUITER_URL).hasAuthority(ROLE_RECRUITER)
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
@@ -49,11 +48,11 @@ public class WebSecurityConfig {
                         .defaultSuccessUrl(DEFAULT_PAGE_URL, false)
                         .successHandler((req, res, auth) -> {
                             for (GrantedAuthority authority : auth.getAuthorities()) {
-                                if (authority.getAuthority().equals("ROLE_APPLICANT")) {
-                                    res.sendRedirect("/homeApplicant"); // Redirect to applicant home page
+                                if (authority.getAuthority().equals(ROLE_APPLICANT)) {
+                                    res.sendRedirect("/" + HOME_APPLICANT_URL); // Redirect to applicant home page
                                     return;
-                                } else if (authority.getAuthority().equals("ROLE_RECRUITER")) {
-                                    res.sendRedirect("/homeRecruiter"); // Redirect to recruiter home page
+                                } else if (authority.getAuthority().equals(ROLE_RECRUITER)) {
+                                    res.sendRedirect("/" + HOME_RECRUITER_URL); // Redirect to recruiter home page
                                     return;
                                 }
                             }
