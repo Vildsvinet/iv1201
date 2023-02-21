@@ -11,6 +11,7 @@ import se.kth.iv1201.domain.Person;
 import se.kth.iv1201.domain.PersonDTO;
 import se.kth.iv1201.repository.PersonRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -39,5 +40,9 @@ public class RecruitmentService {
     public Person getPersonByUsername(String username) {
         return personRepository.findPersonByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+    }
+
+    public List<Person> getAllApplications() {
+        return personRepository.findAllApplications();
     }
 }
