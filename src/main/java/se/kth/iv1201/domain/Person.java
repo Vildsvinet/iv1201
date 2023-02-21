@@ -9,7 +9,6 @@ public class Person implements PersonDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "PERSON_ID")
     private int id;
 

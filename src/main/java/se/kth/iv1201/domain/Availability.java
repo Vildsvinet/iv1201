@@ -13,6 +13,7 @@ public class Availability {
     @Column(name = "AVAILABILITY_ID")
     private int id;
 
+    @Column(name = "PERSON_ID")
     private int person_id;
 
     //TODO set correct date format. how? static jakarta.persistence.TemporalType.DATE; maybe?

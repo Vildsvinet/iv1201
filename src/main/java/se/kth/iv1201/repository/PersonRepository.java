@@ -28,6 +28,6 @@ public interface PersonRepository extends JpaRepository<Person, Integer> {
     Person save(Person person);
 
 
-    @Query("select p from Person p where p.role_id = 2")
+    @Query("select p from Person p RIGHT JOIN Availability a ON a.person_id = p.id")
     List<Person> findAllApplications();
 }
