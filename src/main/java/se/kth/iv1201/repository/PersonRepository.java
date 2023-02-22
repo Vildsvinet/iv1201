@@ -28,6 +28,6 @@ public interface PersonRepository extends JpaRepository<Person, Integer> {
     Person save(Person person);
 
 
-    @Query("select p from Person p RIGHT JOIN Availability a ON a.person_id = p.id")
+    @Query("select p from Person p RIGHT JOIN Availability a ON a.person_id = p.id WHERE DATE_PART('year', a.from_date) = '2021'")
     List<Person> findAllApplications();
 }
