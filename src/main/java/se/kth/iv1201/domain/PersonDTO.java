@@ -15,5 +15,23 @@ public interface PersonDTO {
      * Returns the password.
      */
     String getPassword();
+
+    /**
+     * Returns the status of the person's possible application.
+     * @return
+     */
+    int getApplicationStatus();
+
+    /**
+     * Returns the first name of a person.
+     * @return
+     */
+    String getName();
+
+    /**
+     * Returns the last name of a person.
+     * @return
+     */
+    String getSurname();
 }
 

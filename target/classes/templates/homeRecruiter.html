@@ -10,6 +10,12 @@
 
 <h1 th:inline="text">Hello <span th:remove="tag" sec:authentication="name">thymeleaf</span>!</h1>
 <p>Review applications here!</p>
+<form th:action="@{/applications}"  method="get">
+    <div class="row button">
+        <input type="submit" value="View all applications.">
+    </div>
+</form>
+
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Sign Out"/>
 </form>

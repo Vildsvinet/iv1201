@@ -1,6 +1,7 @@
 package se.kth.iv1201.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,4 +26,8 @@ public interface PersonRepository extends JpaRepository<Person, Integer> {
     List<Person> findAll();
     @Override
     Person save(Person person);
+
+
+    @Query("select p from Person p RIGHT JOIN Availability a ON a.person_id = p.id")
+    List<Person> findAllApplications();
 }

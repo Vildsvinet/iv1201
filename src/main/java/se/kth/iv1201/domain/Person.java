@@ -1,10 +1,7 @@
 package se.kth.iv1201.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 @Entity // By annotating with entity I indicate to Spring that I will want to persist this class in a db
 @Table(name = "Person")
@@ -12,7 +9,6 @@ public class Person implements PersonDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "PERSON_ID")
     private int id;
 
@@ -44,6 +40,11 @@ public class Person implements PersonDTO {
     private String email;
     private int role_id;
 
+    @NotBlank()
+    @Min(0)
+    @Max(2)
+    private int applicationStatus;
+
     /**
      * Required by JPA, if there is a constructor with args, you must have a base constructor
      */
@@ -72,5 +73,19 @@ public class Person implements PersonDTO {
 
     public int getRole_id() {
         return role_id;
+    }
+
+    @Override
+    public int getApplicationStatus() {
+        return applicationStatus;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+    @Override
+    public String getSurname() {
+        return surname;
     }
 }
