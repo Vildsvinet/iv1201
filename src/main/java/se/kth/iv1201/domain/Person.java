@@ -40,9 +40,7 @@ public class Person implements PersonDTO {
     private String email;
     private int role_id;
 
-    @NotBlank()
-    @Min(0)
-    @Max(2)
+
     private int applicationStatus;
 
     /**
