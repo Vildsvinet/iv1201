@@ -35,7 +35,8 @@ public class Person implements PersonDTO {
     private String surname;
 
     @NotBlank()
-    @Pattern(regexp = "\\d{8}[-\\.]\\d{4}")
+    //validate that this is a Swedish personal number
+    @Pattern(regexp = "^(19|20)\\d{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])[-\\.]\\d{4}$")
     private String pnr;
 
     @NotBlank()

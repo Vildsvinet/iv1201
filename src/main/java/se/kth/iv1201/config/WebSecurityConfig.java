@@ -17,6 +17,11 @@ import se.kth.iv1201.application.RecruitmentService;
 import static se.kth.iv1201.presentation.person.PersonController.DEFAULT_PAGE_URL;
 import static se.kth.iv1201.presentation.person.PersonController.LOGIN_PAGE_URL;
 
+/**
+ * This class is used to configure the security filter chain.
+ * Specifically, it specifies which pages can be reached by which user types,
+ * and encrypts the passwords.
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {

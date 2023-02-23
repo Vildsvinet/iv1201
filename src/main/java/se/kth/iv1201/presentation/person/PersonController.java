@@ -33,7 +33,7 @@ public class PersonController {
      * Redirection to default page
      * @return Response, redirection to default page
      */
-    @GetMapping("/")
+    @GetMapping(DEFAULT_PAGE_URL)
     public String showDefaultView() {
         return "redirect:" + LOGIN_PAGE_URL;
     }
@@ -42,7 +42,7 @@ public class PersonController {
      * Redirection to applicant home page.
      * @return Redirect to home page.
      */
-    @GetMapping("/homeApplicant")
+    @GetMapping("/" + HOME_APPLICANT_URL)
     public String showHomeView() {
         return HOME_APPLICANT_URL;
     }
@@ -51,7 +51,7 @@ public class PersonController {
      * Redirection to recruiter home page.
      * @return Redirect to hello page.
      */
-    @GetMapping("/homeRecruiter")
+    @GetMapping("/" + HOME_RECRUITER_URL)
     public String showReviewView() {
         return HOME_RECRUITER_URL;
     }
