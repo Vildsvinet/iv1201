@@ -59,6 +59,12 @@ public class WebSecurityConfig {
                             }
                             throw new IllegalStateException("User has no role assigned");
                         })
+                        .failureUrl("/" + LOGIN_PAGE_URL + "?error=true")
+                        .failureHandler((request, response, exception) -> {
+                            request.getSession().setAttribute("username", request.getParameter("username"));
+                            response.sendRedirect("/login?error");
+                        })
+
                 )
                 .logout(LogoutConfigurer::permitAll);
 
