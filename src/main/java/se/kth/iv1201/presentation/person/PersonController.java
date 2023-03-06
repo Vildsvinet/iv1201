@@ -26,6 +26,7 @@ public class PersonController {
     public static final String HOME_APPLICANT_URL = "homeApplicant";
     public static final String HOME_RECRUITER_URL = "homeRecruiter";
     public static final String APPLICATIONS_URL = "applications";
+    public static final String ERROR_PAGE_URL = "error";
 
     @Autowired
     private RecruitmentService service;
@@ -58,6 +59,9 @@ public class PersonController {
     public String showReviewView() {
         return HOME_RECRUITER_URL;
     }
+
+    @GetMapping("/"+ ERROR_PAGE_URL)
+    public String showErrorView(){return ERROR_PAGE_URL;}
 
     /**
      * A get request for the login page.

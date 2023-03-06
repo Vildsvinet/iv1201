@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/viewParts/layout}">
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6" >
+<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--      layout:decorate="~{/viewParts/layout}">-->
 <head>
 
     <meta charset="UTF-8"/>
@@ -10,7 +12,7 @@
     <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
-<main layout:fragment="content">
+<!--<main layout:fragment="content">-->
 <h1>Login page</h1>
 <div sec:authorize="hasRole('ROLE_APPLICANT')">
     <a th:href="@{/homeApplicant}">Home</a>
@@ -55,6 +57,6 @@
         </form>
     </div>
 </div>
-</main>
+<!--</main>-->
 </body>
 </html>

@@ -4,12 +4,14 @@ import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * This class is used to handle exceptions.
  */
 @ControllerAdvice
 public class ExceptionHandlers implements ErrorController {
+    private static final String ERROR_PAGE_URL = "error";
 
     /**
      * This method is used to handle generic exceptions,
@@ -19,7 +21,7 @@ public class ExceptionHandlers implements ErrorController {
      */
     @ExceptionHandler(Exception.class)
     public String handleException(Exception exception) {
-        return "error";
+        return ERROR_PAGE_URL;
     }
 
 }
