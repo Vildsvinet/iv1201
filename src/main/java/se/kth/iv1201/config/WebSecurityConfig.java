@@ -40,6 +40,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/", "/" + LOGIN_PAGE_URL, "/" + CREATE_USER_PAGE_URL).permitAll()
                         .requestMatchers("/" + HOME_RECRUITER_URL,"/"+ APPLICATIONS_URL).hasAuthority(ROLE_RECRUITER)
+                        .requestMatchers("/" + HOME_APPLICANT_URL).hasAuthority(ROLE_APPLICANT)
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
@@ -58,6 +59,12 @@ public class WebSecurityConfig {
                             }
                             throw new IllegalStateException("User has no role assigned");
                         })
+                        .failureUrl("/" + LOGIN_PAGE_URL + "?error=true")
+                        .failureHandler((request, response, exception) -> {
+                            request.getSession().setAttribute("username", request.getParameter("username"));
+                            response.sendRedirect("/login?error");
+                        })
+
                 )
                 .logout(LogoutConfigurer::permitAll);
 
