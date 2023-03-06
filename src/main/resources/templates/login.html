@@ -7,6 +7,7 @@
 
     <meta charset="UTF-8"/>
     <title>Login</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
 <main layout:fragment="content">
@@ -31,15 +32,15 @@
                 You have been logged out.
             </div>
             <p>
-                <!--            TODO Use Labels with styling?-->
-                <!--            <label>Username:-->
-                <input type="text" name="username" placeholder="Enter username">
-                <!--            </label>-->
+                <label for="username">Username:
+                    <input type="text" id="username" name="username" th:value="${session.username}"
+                           placeholder="Enter username"/>
+                </label>
             </p>
             <p>
-                <!--            <label>Password:-->
-                <input type="password" name="password" placeholder="Enter password">
-                <!--            </label>-->
+                <label for="password">Password:
+                    <input type="password" id="password" name="password" placeholder="Enter password">
+                </label>
             </p>
             <button type="submit">Submit</button>
         </form>

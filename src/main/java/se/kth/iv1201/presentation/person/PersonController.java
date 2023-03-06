@@ -7,22 +7,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import se.kth.iv1201.application.RecruitmentService;
 import se.kth.iv1201.domain.IllegalDatabaseAccessException;
+import se.kth.iv1201.domain.Person;
 import se.kth.iv1201.domain.PersonDTO;
 import se.kth.iv1201.presentation.forms.CreateUserForm;
 import se.kth.iv1201.presentation.forms.LoginForm;
+
+import java.util.List;
 
 @Controller
 @Scope("session")
 public class PersonController {
     public static final String DEFAULT_PAGE_URL = "/";
     public static final String LOGIN_PAGE_URL = "login";
-    static final String CREATE_USER_PAGE_URL = "createUser";
-    static final String HOME_APPLICANT_URL = "homeApplicant";
-    static final String HOME_RECRUITER_URL = "homeRecruiter";
+    public static final String CREATE_USER_PAGE_URL = "createUser";
+    public static final String HOME_APPLICANT_URL = "homeApplicant";
+    public static final String HOME_RECRUITER_URL = "homeRecruiter";
+    public static final String APPLICATIONS_URL = "applications";
 
     @Autowired
     private RecruitmentService service;
@@ -97,7 +100,6 @@ public class PersonController {
         }
 
         int role_id = 2;
-        // make db call here
         try {
             person = service.createPerson(createUserForm.getName(), createUserForm.getSurname(), createUserForm.getPnr(), createUserForm.getEmail(), createUserForm.getPassword(), role_id, createUserForm.getUsername());
         } catch(Exception e){
@@ -110,6 +112,14 @@ public class PersonController {
         m.addAttribute("success", "Registration successful!");
         return CREATE_USER_PAGE_URL;
 
+    }
+
+    @GetMapping("/" + APPLICATIONS_URL)
+    public String showAllApplications(Model m) {
+        // TODO service call to getALL applications
+        List<Person> applications = service.getAllApplications();
+        m.addAttribute("applications", applications);
+        return APPLICATIONS_URL;
     }
 
 }
