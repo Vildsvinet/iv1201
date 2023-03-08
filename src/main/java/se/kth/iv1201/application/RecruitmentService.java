@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * This class is the service class for the application.
+ *
  * Transactions:
  * All code in this class will be managed in a transaction.
  * Transaction starts when code in this class is called, and ends when these defined methods return or
@@ -29,6 +31,19 @@ public class RecruitmentService {
     @Autowired
     private PersonRepository personRepository;
 
+    /**
+     * Creates a new person row in the database table Person.
+     * Will check if the username is already taken, and if Yes throw an Exception.
+     * @param name      the first name as entered by a user trying to create a new account
+     * @param surname   the last name/surname
+     * @param pnr       personal number/social security number (Swedish only)
+     * @param email     the email address of the aspiring user
+     * @param password  chosen password
+     * @param role_id   whether the created user should be a recruiter (1) or an applicant (2)
+     * @param username  chosen username
+     * @return A DTO of what is saved in the repository/database
+     * @throws IllegalDatabaseAccessException   If the username is already occupied
+     */
     public PersonDTO createPerson(String name, String surname, String pnr, String email, String password, int role_id, String username ) throws IllegalDatabaseAccessException {
         Optional<Person> personEntity = personRepository.findPersonByUsername(username);
         if (personEntity.isPresent()) {

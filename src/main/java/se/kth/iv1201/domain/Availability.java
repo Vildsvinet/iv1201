@@ -4,7 +4,10 @@ import jakarta.persistence.*;
 
 import java.util.Date;
 
-@Entity // By annotating with entity I indicate to Spring that I will want to persist this class in a db
+/**
+ * Handles availability for the applicants.
+ */
+@Entity //Annotating with entity indicates to Spring that this class should persist in a db
 @Table(name = "Availability")
 public class Availability {
 
@@ -20,6 +23,5 @@ public class Availability {
     private Date from_date;
 
     private Date to_date;
-
 
 }

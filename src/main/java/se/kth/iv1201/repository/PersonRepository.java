@@ -12,7 +12,8 @@ import java.util.Optional;
 
 /**
  * This is a repository that is called from the service layer.
- * <p>
+ * Handles database accesses related to persons.
+ *
  * Transaction management:
  * using Spring's Transaction manager and applying a rule that, only current transactions
  * can call code contained in this repo. Otherwise, an exception will be thrown.
@@ -28,6 +29,10 @@ public interface PersonRepository extends JpaRepository<Person, Integer> {
     Person save(Person person);
 
 
-    @Query("select p from Person p RIGHT JOIN Availability a ON a.person_id = p.id WHERE DATE_PART('year', a.from_date) = '2021'")
+    /**
+     * Queries the database for people who are available to work in 2021.
+     * @return A list of Person objects.
+     */
+    @Query("SELECT p FROM Person p RIGHT JOIN Availability a ON a.person_id = p.id WHERE DATE_PART('year', a.from_date) = '2021'")
     List<Person> findAllApplications();
 }

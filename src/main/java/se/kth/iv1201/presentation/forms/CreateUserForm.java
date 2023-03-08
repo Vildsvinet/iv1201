@@ -9,7 +9,6 @@ import jakarta.validation.constraints.Size;
 /**
  * A form bean for creating user accounts.
  * Contains validation rules.
- *
  */
 public class CreateUserForm {
     private final String notBlankMessage = "Please write something.";

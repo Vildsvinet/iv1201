@@ -1,48 +1,51 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/viewParts/layout}">
 <head>
-  <meta charset="UTF-8">
-  <title>List of applications</title>
+    <meta charset="UTF-8">
+    <title>List of applications</title>
 </head>
 <body>
+<main layout:fragment="content">
+    <h1 th:inline="text">Hello <span th:remove="tag" sec:authentication="name">thymeleaf</span>!</h1>
+    <p>Review applications here!</p>
 
-<h1 th:inline="text">Hello <span th:remove="tag" sec:authentication="name">thymeleaf</span>!</h1>
-<p>Review applications here!</p>
+    <form th:action="@{/homeRecruiter}" method="get">
+        <div class="row button">
+            <input type="submit" value="Back to home page.">
+        </div>
+    </form>
 
-<form th:action="@{/homeRecruiter}"  method="get">
-  <div class="row button">
-    <input type="submit" value="Back to home page.">
-  </div>
-</form>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
 
-<form th:action="@{/logout}" method="post">
-  <input type="submit" value="Sign Out"/>
-</form>
-
-<table>
-  <thead>
-  <tr>
-    <th> First Name </th>
-    <th> Last name </th>
-    <th> Application status </th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:if="${applications.isEmpty()}">
-    <td colspan="2"> No applications found </td>
-  </tr>
-  <tr th:each="a : ${applications}">
-    <td><span th:text="${a.name}"> First Name </span></td>
-    <td><span th:text="${a.surname}"> Last Name </span></td>
-    <td>
-      <span th:if="${a.applicationStatus == 0}">Unhandled</span>
-      <span th:if="${a.applicationStatus == 1}">Accepted</span>
-      <span th:if="${a.applicationStatus == 2}">Rejected</span>
-    </td>
-  </tr>
-  </tbody>
-</table>
+    <table>
+        <thead>
+        <tr>
+            <th> First Name</th>
+            <th> Last name</th>
+            <th> Application status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${applications.isEmpty()}">
+            <td colspan="2"> No applications found</td>
+        </tr>
+        <tr th:each="a : ${applications}">
+            <td><span th:text="${a.name}"> First Name </span></td>
+            <td><span th:text="${a.surname}"> Last Name </span></td>
+            <td>
+                <span th:if="${a.applicationStatus == 0}">Unhandled</span>
+                <span th:if="${a.applicationStatus == 1}">Accepted</span>
+                <span th:if="${a.applicationStatus == 2}">Rejected</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
 </body>
 </html>
