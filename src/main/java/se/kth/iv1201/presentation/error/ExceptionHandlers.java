@@ -28,8 +28,16 @@ public class ExceptionHandlers implements ErrorController {
     @ExceptionHandler(Exception.class)
     public String handleException(Exception exception, Model model) {
         System.out.println("Exception: " + exception.getMessage());
-        model.addAttribute(ERROR_TYPE, "Exception handler caught an exception, amazing! Please contact support.");
+        model.addAttribute(ERROR_TYPE, exception.getMessage());
         return ERROR_PAGE_URL;
+    }
+
+    /*
+    * TODO Remove this method.
+     */
+    @GetMapping("/forcedException")
+    public String testException() throws Exception {
+        throw new Exception("This is a test exception.");
     }
 
     /**
