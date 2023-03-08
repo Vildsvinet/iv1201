@@ -2,61 +2,60 @@
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6" >
-<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
-<!--      layout:decorate="~{/viewParts/layout}">-->
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/viewParts/layout}">
 <head>
-
     <meta charset="UTF-8"/>
     <title>Login</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
-<!--<main layout:fragment="content">-->
-<h1>Login page</h1>
-<div sec:authorize="hasRole('ROLE_APPLICANT')">
-    <a th:href="@{/homeApplicant}">Home</a>
-</div>
-<div sec:authorize="hasRole('ROLE_RECRUITER')">
-    <a th:href="@{/homeRecruiter}">Home</a>
-</div>
-
-<div sec:authorize="isAnonymous()">
-    <div>
-        <form th:action="@{/login}" th:object="${loginForm}" method="post">
-            <p>
-                Please enter user credentials
-            </p>
-            <div th:if="${param.error}">
-                Invalid username and password.
-            </div>
-            <div th:if="${param.logout}">
-                You have been logged out.
-            </div>
-            <p>
-                <label for="username">Username:
-                    <input type="text" id="username" name="username" th:value="${session.username}"
-                           placeholder="Enter username"/>
-                </label>
-            </p>
-            <p>
-                <label for="password">Password:
-                    <input type="password" id="password" name="password" placeholder="Enter password">
-                </label>
-            </p>
-            <button type="submit">Submit</button>
-        </form>
+<main layout:fragment="content">
+    <h1>Login page</h1>
+    <div sec:authorize="hasRole('ROLE_APPLICANT')">
+        <a th:href="@{/homeApplicant}">Home</a>
+    </div>
+    <div sec:authorize="hasRole('ROLE_RECRUITER')">
+        <a th:href="@{/homeRecruiter}">Home</a>
     </div>
 
-    <div>
-        <h1>Create account </h1>
-        <form th:action="@{/createUser}" method="get">
-            <div class="row button">
-                <input type="submit" value="Create Account">
-            </div>
-        </form>
+    <div sec:authorize="isAnonymous()">
+        <div>
+            <form th:action="@{/login}" th:object="${loginForm}" method="post">
+                <p>
+                    Please enter user credentials
+                </p>
+                <div th:if="${param.error}">
+                    Invalid username and password.
+                </div>
+                <div th:if="${param.logout}">
+                    You have been logged out.
+                </div>
+                <p>
+                    <label for="username">Username:
+                        <input type="text" id="username" name="username" th:value="${session.username}"
+                               placeholder="Enter username"/>
+                    </label>
+                </p>
+                <p>
+                    <label for="password">Password:
+                        <input type="password" id="password" name="password" placeholder="Enter password">
+                    </label>
+                </p>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+        <div>
+            <h1>Create account </h1>
+            <form th:action="@{/createUser}" method="get">
+                <div class="row button">
+                    <input type="submit" value="Create Account">
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-<!--</main>-->
+</main>
 </body>
 </html>

@@ -69,7 +69,8 @@ public class PersonController {
      * @return Redirect to error page.
      */
     @GetMapping("/"+ ERROR_PAGE_URL)
-    public String showErrorView(){
+    public String showErrorView(Model model){
+        model.addAttribute("errorType", "test");
         return ERROR_PAGE_URL;
     }
 

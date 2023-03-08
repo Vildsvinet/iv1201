@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/viewParts/layout}">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
 </head>
 <body>
+<main layout:fragment="content">
+    <h1 th:inline="text">Hello <span th:remove="tag" sec:authentication="name">thymeleaf</span>!</h1>
+    <p>Review applications here!</p>
+    <form th:action="@{/applications}" method="get">
+        <div class="row button">
+            <input type="submit" value="View all applications.">
+        </div>
+    </form>
 
-<h1 th:inline="text">Hello <span th:remove="tag" sec:authentication="name">thymeleaf</span>!</h1>
-<p>Review applications here!</p>
-<form th:action="@{/applications}"  method="get">
-    <div class="row button">
-        <input type="submit" value="View all applications.">
-    </div>
-</form>
-
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+</main>
 </body>
 </html>

@@ -1,11 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/viewParts/layout}">
 <head>
     <meta charset="UTF-8">
     <title>Oops! Something went wrong.</title>
 </head>
 <body>
-This page replaces fall back whitelabel error page.
-<!-- TODO add information about errors -->
+<main layout:fragment="content">
+    This page replaces fall back whitelabel error page.
+    <!-- TODO add information about errors -->
+    <div>
+        <p th:text="${errorType}"></p>
+    </div>
+
+<!--    403 404 500-->
+
+
+</main>
 </body>
 </html>
