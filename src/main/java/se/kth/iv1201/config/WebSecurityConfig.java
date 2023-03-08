@@ -33,6 +33,7 @@ public class WebSecurityConfig {
 
     /**
      * Sets up the security filter chain. This is the entry point into the Spring Security configuration.
+     *
      * @param http The HttpSecurity object to configure.
      * @return The security filter chain.
      * @throws Exception If an error occurs.
@@ -42,7 +43,7 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/", "/" + LOGIN_PAGE_URL, "/" + CREATE_USER_PAGE_URL).permitAll()
-                        .requestMatchers("/" + HOME_RECRUITER_URL,"/"+ APPLICATIONS_URL).hasAuthority(ROLE_RECRUITER)
+                        .requestMatchers("/" + HOME_RECRUITER_URL, "/" + APPLICATIONS_URL).hasAuthority(ROLE_RECRUITER)
                         .requestMatchers("/" + HOME_APPLICANT_URL).hasAuthority(ROLE_APPLICANT)
                         .anyRequest().authenticated()
                 )
@@ -88,6 +89,7 @@ public class WebSecurityConfig {
 
     /**
      * Encodes passwords using BCrypt. DelegatingPasswordEncoder is more flexible, but we're only supporting BCrypt.
+     *
      * @return The BCrypt password encoder.
      */
     @Bean

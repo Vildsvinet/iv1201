@@ -30,7 +30,6 @@ public class PersonController {
     public static final String HOME_APPLICANT_URL = "homeApplicant";
     public static final String HOME_RECRUITER_URL = "homeRecruiter";
     public static final String APPLICATIONS_URL = "applications";
-    public static final String ERROR_PAGE_URL = "error";
 
     @Autowired
     private RecruitmentService service;
@@ -62,16 +61,6 @@ public class PersonController {
     @GetMapping("/" + HOME_RECRUITER_URL)
     public String showReviewView() {
         return HOME_RECRUITER_URL;
-    }
-
-    /**
-     * Redirection to the default customised error page.
-     * @return Redirect to error page.
-     */
-    @GetMapping("/"+ ERROR_PAGE_URL)
-    public String showErrorView(Model model){
-        model.addAttribute("errorType", "test");
-        return ERROR_PAGE_URL;
     }
 
     /**
