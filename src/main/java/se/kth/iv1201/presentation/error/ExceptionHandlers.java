@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
- * This class is used to handle exceptions.
+ * This class is used to handle all exceptions.
  */
 @ControllerAdvice
 public class ExceptionHandlers implements ErrorController {

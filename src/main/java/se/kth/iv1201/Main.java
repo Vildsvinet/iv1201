@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Starts the themePark application.
+ * Starts the theme park recruitment application.
  */
 @SpringBootApplication
 public class Main {

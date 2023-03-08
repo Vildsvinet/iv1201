@@ -3,6 +3,7 @@ package se.kth.iv1201.domain;
 /**
  * Thrown whenever an attempt is made to perform a transaction that is not
  * allowed by the business rules of the recruitment application.
+ * For example when we try to create a user with the same username as an existing user.
  */
 public class IllegalDatabaseAccessException extends Exception {
     /**

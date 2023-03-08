@@ -29,9 +29,7 @@ public class WebSecurityConfig {
     private static final String ROLE_RECRUITER = "ROLE_RECRUITER";
     private static final String ROLE_ADMIN = "ROLE_ADMIN";
 
-    public WebSecurityConfig() {
-
-    }
+    public WebSecurityConfig() {}
 
     /**
      * Sets up the security filter chain. This is the entry point into the Spring Security configuration.
@@ -69,14 +67,17 @@ public class WebSecurityConfig {
                             request.getSession().setAttribute("username", request.getParameter("username"));
                             response.sendRedirect("/login?error");
                         })
-
                 )
                 .logout(LogoutConfigurer::permitAll);
-
 
         return http.build();
     }
 
+    /**
+     * Takes the service for the application and builds a new service for Spring Security user handling.
+     * @param recruitmentService
+     * @return a service for the user details that is built by the repository
+     */
     @Bean
     public UserDetailsService userDetailsService(RecruitmentService recruitmentService) {
         return username -> User.withUsername(username)
