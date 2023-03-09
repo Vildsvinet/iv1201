@@ -2,14 +2,14 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+>
 
-      >
-<head>
-  <title>Uncle Park Wants YOU!</title>
+<head th:replace="~{/fragments/heading::heading}">
+    <title>Will be replaced</title>
 </head>
+
 <body>
-<header th:replace="~{/viewParts/header::header}"></header>
+<header th:replace="~{/fragments/header::header}"></header>
 <main layout:fragment="content"></main>
 </body>
 </html>

@@ -3,7 +3,7 @@
       xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/viewParts/layout}">
+      layout:decorate="~{/fragments/layout}">
 <head>
     <meta charset="UTF-8">
     <title>List of applications</title>
@@ -14,13 +14,15 @@
     <p>Review applications here!</p>
 
     <form th:action="@{/homeRecruiter}" method="get">
-        <div class="row button">
-            <input type="submit" value="Back to home page.">
-        </div>
+<!--        <div class="row button">-->
+<!--            <input type="submit" value="Back to home page.">-->
+<!--        </div>-->
+        <button type="submit" value="Back To Home">Back To Home</button>
     </form>
 
     <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Sign Out"/>
+<!--        <input type="submit" value="Sign Out"/>-->
+        <button type="submit" value="Sign Out">Sign Out</button>
     </form>
 
     <table>

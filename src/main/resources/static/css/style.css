@@ -1,8 +1,42 @@
-label {
-    display: none;
+
+header{
+    text-align: center;
+    /*background-color: darkgreen;*/
+    color: darkgreen;
+    font-size: 2em;
 }
 
-/*header{*/
-/*    background-color: darkgreen;*/
-/*    color: aquamarine;*/
-/*}*/
+header .heading{
+    padding: 5px;
+}
+
+/*change the font family of the entire app*/
+/*make bgimage.jpg the background image of the entire app*/
+body{
+    font-family: 'Roboto', sans-serif;
+    background-color: darkgreen;
+    background-image: url("/images/bgimage.jpg");
+    background-position: center;
+    background-size: cover;
+    min-height: 100vh;
+    font-weight: bold;
+}
+
+main{
+    padding-left: 10vw;
+    padding-top: 10vh;
+    max-height: 100vh;
+    background-color: #00FF0014;
+}
+
+
+/*Make all buttons in my app look nice*/
+button{
+    background-color: darkgreen;
+    color: aquamarine;
+    border: 2px solid aquamarine;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 1.2em;
+}
+

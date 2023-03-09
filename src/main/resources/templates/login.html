@@ -4,7 +4,7 @@
       xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/viewParts/layout}">
+      layout:decorate="~{/fragments/layout}">
 <head>
     <meta charset="UTF-8"/>
     <title>Login</title>
@@ -12,12 +12,17 @@
 </head>
 <body>
 <main layout:fragment="content">
-    <h1>Login page</h1>
+    <h1>Login</h1>
     <div sec:authorize="hasRole('ROLE_APPLICANT')">
-        <a th:href="@{/homeApplicant}">Home</a>
+<!--        <a th:href="@{/homeApplicant}">Home</a>-->
+        <a th:href="@{/homeApplicant}" class="btn btn-primary" role="button"> Home</a>
+
+
+<!--        <a th:href="@{/redirect-url}" class="btn btn-primary" role="button">Redirect</a>-->
     </div>
     <div sec:authorize="hasRole('ROLE_RECRUITER')">
-        <a th:href="@{/homeRecruiter}">Home</a>
+<!--        <a th:href="@{/homeRecruiter}">Home</a>-->
+        <a th:href="@{/homeApplicant}" class="btn btn-primary" role="button"> Home</a>
     </div>
 
     <div sec:authorize="isAnonymous()">
@@ -50,9 +55,7 @@
         <div>
             <h1>Create account </h1>
             <form th:action="@{/createUser}" method="get">
-                <div class="row button">
-                    <input type="submit" value="Create Account">
-                </div>
+                    <button type="submit" value="Create Account">Create Account</button>
             </form>
         </div>
     </div>
