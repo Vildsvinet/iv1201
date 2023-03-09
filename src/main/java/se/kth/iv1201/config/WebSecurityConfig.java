@@ -67,6 +67,10 @@ public class WebSecurityConfig {
                         .failureUrl("/" + LOGIN_PAGE_URL + "?error=true")
                         .failureHandler((request, response, exception) -> {
                             request.getSession().setAttribute("username", request.getParameter("username"));
+//                            if (exception instanceof BadCredentialsException) {
+//                                response.sendRedirect("/login?error");
+//                            }
+                            //if database down
                             response.sendRedirect("/login?error");
                         })
                 )
