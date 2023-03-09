@@ -49,3 +49,12 @@ form {
     padding-bottom: 3vh;
 
 }
+
+.errorText {
+    color: red;
+    font-weight: normal;
+}
+.error{
+    color: red;
+    font-weight: normal;
+}
