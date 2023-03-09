@@ -10,6 +10,12 @@
 <main layout:fragment="content">
     <h1 th:inline="text">Hello <span th:remove="tag" sec:authentication="name">thymeleaf</span>!</h1>
     <p>Apply for a job here!</p>
+    <form th:action="@{/homeApplicant}" method="get">
+        <div class="row button">
+            <!--            <input type="submit" value="View all applications.">-->
+            <button type="submit" value="Apply Now">Apply Now</button>
+        </div>
+    </form>
     <form th:action="@{/logout}" method="post">
 <!--        <input type="submit" value="Sign Out"/>-->
         <button type="submit" value="Sign Out">Sign Out</button>

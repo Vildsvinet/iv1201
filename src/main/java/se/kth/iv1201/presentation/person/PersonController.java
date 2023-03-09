@@ -120,7 +120,7 @@ public class PersonController {
         }
         m.addAttribute("success", "Registration successful!");
         return CREATE_USER_PAGE_URL;
-    }       //TODO adapt to new errorHandling
+    }
 
     /**
      * Redirection to the page listing applications.
@@ -129,7 +129,6 @@ public class PersonController {
      */
     @GetMapping("/" + APPLICATIONS_URL)
     public String showAllApplications(Model m) {
-        // TODO service call to getALL applications
         List<Person> applications = service.getAllApplications();
         m.addAttribute("applications", applications);
         return APPLICATIONS_URL;

@@ -2,9 +2,13 @@
 header{
     text-align: center;
     /*background-color: darkgreen;*/
-    font-family: fantasy;
+    /*make this a cool header font*/
+    font-family: 'acme', fantasy;
     color: darkgreen;
     font-size: 2em;
+}
+header h1{
+    font-family: 'acme', fantasy;
 }
 
 header .heading{
@@ -21,6 +25,7 @@ body{
     background-size: cover;
     min-height: 100vh;
     font-weight: bold;
+    overflow: hidden;
 }
 
 main{
@@ -31,6 +36,25 @@ main{
     max-height: 100vh;
     background-color: rgba(0, 255, 34, 0.14);
     text-align: center;
+    overflow: auto;
+    scroll-behavior: initial;
+}
+
+table{
+    margin: auto;
+    border: 2px solid aquamarine;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 1.2em;
+    background-color: rgba(0, 255, 34, 0.14);
+    text-align: center;
+    text-after-overflow: ellipsis;
+    color: #f1f0f5;
+}
+
+table tbody tr td{
+    padding: 5px;
+    font-weight: normal;
 }
 
 
@@ -40,14 +64,13 @@ button{
     color: aquamarine;
     border: 2px solid aquamarine;
     border-radius: 5px;
-    padding: 5px;
+    padding: 1vh;
     font-size: 1.2em;
 }
 
 form {
-    padding-top: 3vh;
-    padding-bottom: 3vh;
-
+    padding-top: 1vh;
+    padding-bottom: 1vh;
 }
 
 .errorText {

@@ -25,7 +25,7 @@ public class ExceptionHandlers implements ErrorController {
     private static final String ERROR_PAGE_URL = "error";
     private static final String ERROR_TYPE = "errorType";
     private static final String NOT_FOUND_MESSAGE = "Page not found. If you expected it to exist, please contact support.";
-    private static final String FORBIDDEN_MESSAGE = "You do not have permission to view this page!";
+    private static final String FORBIDDEN_MESSAGE = "You do not have permission to view this page! If you feel like you should, please contact support.";
     private static final String INTERNAL_SERVER_ERROR_MESSAGE = "Something unexpected went wrong, please try again later or contact support.";
     private static final String SERVICE_UNAVAILABLE_MESSAGE = "The service is currently unavailable, please try again later.";
     private static final String GENERIC_ERROR_MESSAGE = "Something unexpected went wrong, please try again later or contact support.";
@@ -33,18 +33,34 @@ public class ExceptionHandlers implements ErrorController {
     private static final String NO_HTTP_STATUS_MESSAGE = "No HTTP status code was found.";
 
 
-
     /**
      * This method is used to handle database exceptions.
-     * @param exception
-     * @param model
-     * @return
+     * @param exception the exception that was thrown.
+     * @param model the model to add the error message to.
+     * @return the error page.
      */
     @ExceptionHandler({IllegalDatabaseException.class, JDBCException.class, CannotCreateTransactionException.class, ConnectException.class})
     @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
     public String handleDatabaseExceptions(JDBCException exception, Model model) {
         System.out.println("JDBCException: " + exception.getMessage());
         model.addAttribute(ERROR_TYPE, DATABASE_ERROR_MESSAGE);
+        return ERROR_PAGE_URL;
+    }
+
+    /**
+     * This method is used to handle exceptions that are thrown when a user has no or incorrect role assigned.
+     * @param exception the exception that was thrown.
+     * @param model the model to add the error message to.
+     * @return the error page.
+     */
+    @ExceptionHandler({IllegalArgumentException.class, IllegalStateException.class})
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public String handleIllegalExceptions(Exception exception, Model model) {
+        System.out.println("IllegalException: " + exception.getMessage());
+        if(exception.getMessage().contains("role"))
+            model.addAttribute(ERROR_TYPE, FORBIDDEN_MESSAGE);
+        else
+            model.addAttribute(ERROR_TYPE, GENERIC_ERROR_MESSAGE);
         return ERROR_PAGE_URL;
     }
 
@@ -66,8 +82,8 @@ public class ExceptionHandlers implements ErrorController {
     * TODO Remove this method.
      */
     @GetMapping("/forcedException")
-    public String testException() throws ConnectException {
-        throw new ConnectException("This is a test exception.");
+    public String testException() throws IllegalDatabaseException {
+        throw new IllegalDatabaseException("This is a test exception.");
     }
 
     /**
