@@ -1,4 +1,4 @@
-package se.kth.iv1201.domain;
+package se.kth.iv1201.exceptions;
 
 /**
  * Thrown whenever an attempt is made to perform a transaction that is not

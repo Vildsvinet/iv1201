@@ -9,7 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import se.kth.iv1201.application.RecruitmentService;
-import se.kth.iv1201.domain.IllegalDatabaseException;
+import se.kth.iv1201.exceptions.IllegalDatabaseException;
 import se.kth.iv1201.domain.Person;
 import se.kth.iv1201.domain.PersonDTO;
 import se.kth.iv1201.presentation.forms.CreateUserForm;

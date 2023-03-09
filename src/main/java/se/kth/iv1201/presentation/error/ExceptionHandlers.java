@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import se.kth.iv1201.domain.IllegalDatabaseException;
+import se.kth.iv1201.exceptions.IllegalDatabaseException;
 
 import java.net.ConnectException;
 
