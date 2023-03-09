@@ -10,7 +10,6 @@ import jakarta.validation.constraints.*;
 @Entity //Annotating with entity indicates to Spring that this class should persist in a db
 @Table(name = "Person")
 public class Person implements PersonDTO {
-    @NotBlank()
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

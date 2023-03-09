@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import se.kth.iv1201.domain.IllegalDatabaseException;
 
 import java.net.ConnectException;
 
@@ -39,9 +40,9 @@ public class ExceptionHandlers implements ErrorController {
      * @param model
      * @return
      */
-    @ExceptionHandler({JDBCException.class, CannotCreateTransactionException.class, ConnectException.class})
+    @ExceptionHandler({IllegalDatabaseException.class, JDBCException.class, CannotCreateTransactionException.class, ConnectException.class})
     @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
-    public String handleJDBCException(JDBCException exception, Model model) {
+    public String handleDatabaseExceptions(JDBCException exception, Model model) {
         System.out.println("JDBCException: " + exception.getMessage());
         model.addAttribute(ERROR_TYPE, DATABASE_ERROR_MESSAGE);
         return ERROR_PAGE_URL;
