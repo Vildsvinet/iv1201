@@ -115,7 +115,7 @@ public class PersonController {
         }
         m.addAttribute("success", "Registration successful!");
         return CREATE_USER_PAGE_URL;
-    }
+    }       //TODO adapt to new errorHandling
 
     /**
      * Redirection to the page listing applications.

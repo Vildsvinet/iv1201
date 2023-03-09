@@ -15,13 +15,13 @@
     <h1>Login</h1>
     <div sec:authorize="hasRole('ROLE_APPLICANT')">
         <!--        <a th:href="@{/homeApplicant}">Home</a>-->
-        <a th:href="@{/homeApplicant}" class="btn btn-primary" role="button"> Home</a>
+<!--        <a th:href="@{/homeApplicant}" class="btn btn-primary" role="button"> Home</a>-->
         <section>
-            <h1>To Login </h1>
-            <form th:action="@{/login}" method="get">
+            <h1>To Home </h1>
+            <form th:action="@{/homeApplicant}" method="get">
                 <!--            <div class="row button">-->
                 <!--                <input type="submit" value="Go to login page">-->
-                <button type="submit" value="Go To Login Page">Go To Login Page</button>
+                <button type="submit" value="Go To Home Page">Go To Home Page</button>
                 <!--            </div>-->
             </form>
         </section>
@@ -31,13 +31,13 @@
     </div>
     <div sec:authorize="hasRole('ROLE_RECRUITER')">
         <!--        <a th:href="@{/homeRecruiter}">Home</a>-->
-        <a th:href="@{/homeApplicant}" class="btn btn-primary" role="button"> Home</a>
+<!--        <a th:href="@{/homeApplicant}" class="btn btn-primary" role="button"> Home</a>-->
         <section>
-            <h1>To Login </h1>
-            <form th:action="@{/login}" method="get">
+            <h1>To Home </h1>
+            <form th:action="@{/homeRecruiter}" method="get">
                 <!--            <div class="row button">-->
                 <!--                <input type="submit" value="Go to login page">-->
-                <button type="submit" value="Go To Login Page">Go To Login Page</button>
+                <button type="submit" value="Go To Home Page">Go To Home Page</button>
                 <!--            </div>-->
             </form>
         </section>

@@ -65,8 +65,8 @@ public class ExceptionHandlers implements ErrorController {
     * TODO Remove this method.
      */
     @GetMapping("/forcedException")
-    public String testException() throws Exception {
-        throw new Exception("This is a test exception.");
+    public String testException() throws ConnectException {
+        throw new ConnectException("This is a test exception.");
     }
 
     /**
