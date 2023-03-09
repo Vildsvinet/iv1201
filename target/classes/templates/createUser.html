@@ -4,10 +4,11 @@
       xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/viewParts/layout}">
+      layout:decorate="~{/fragments/layout}">
 <head>
     <meta charset="UTF-8">
     <title>Create Account</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
 <main layout:fragment="content">
@@ -15,46 +16,46 @@
     <form th:action="@{/createUser}" th:object="${createUserForm}" method="post">
         <p>
             <input type="text" th:field="*{name}" name="name" placeholder="Enter first name">
-            <span class="error" th:if="${#fields.hasErrors('name')}">Invalid name</span>
+            <span class="error" th:if="${#fields.hasErrors('name')}"><br/>Invalid name</span>
         </p>
         <p>
             <input type="text" th:field="*{surname}" name="surname" placeholder="Enter last name">
-            <span class="error" th:if="${#fields.hasErrors('surname')}">Invalid surname</span>
+            <span class="error" th:if="${#fields.hasErrors('surname')}"><br/>Invalid surname</span>
         </p>
         <p>
             <input type="text" th:field="*{pnr}" name="pnr" placeholder="Enter person number">
-            <span class="error" th:if="${#fields.hasErrors('pnr')}">Invalid person number</span>
+            <span class="error" th:if="${#fields.hasErrors('pnr')}"><br/>Invalid person number</span>
         </p>
         <p>
             <input type="email" th:field="*{email}" name="email" placeholder="Enter email">
-            <span class="error" th:if="${#fields.hasErrors('email')}">Invalid email</span>
+            <span class="error" th:if="${#fields.hasErrors('email')}"><br/>Invalid email</span>
         </p>
         <p>
             <input type="text" th:field="*{username}" name="username" placeholder="Enter username">
-            <span class="error" th:if="${#fields.hasErrors('username')}">Invalid username</span>
+            <span class="error" th:if="${#fields.hasErrors('username')}"><br/>Invalid username</span>
         </p>
-        <p th:if="${userNameError}" class="error">
-        <p th:text="${userNameError}"></p></p>
+        <p th:if="${userNameError}" class="error" th:text="${userNameError}">User name already exists.</p>
         <p>
             <input type="password" th:field="*{password}" name="password" placeholder="Enter password">
-            <span class="error" th:if="${#fields.hasErrors('password')}">Invalid password</span>
+            <span class="error" th:if="${#fields.hasErrors('password')}"><br/>Invalid password</span>
         </p>
         <p th:if="${error}" class="error">
-        <p th:text="${error}"></p></p>
+        <p th:text="${error}"></p>
         <button type="submit">Submit</button>
     </form>
 
     <p th:if="${success}" class="success">
-    <p th:text="${success}"></p></p>
+    <p th:text="${success}"></p>
 
-    <section>
-        <h1>To Login </h1>
-        <form th:action="@{/login}" method="get">
-            <div class="row button">
-                <input type="submit" value="Go to login page">
-            </div>
-        </form>
-    </section>
+
+    <h1>To Login </h1>
+    <form th:action="@{/login}" method="get">
+        <!--            <div class="row button">-->
+        <!--                <input type="submit" value="Go to login page">-->
+        <p><button type="submit" value="Go To Login Page">Go To Login Page</button></p>
+        <!--            </div>-->
+    </form>
+
 </main>
 </body>
 </html>

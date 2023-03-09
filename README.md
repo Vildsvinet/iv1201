@@ -39,6 +39,7 @@ POSTGRES_TCP_ADDR = localhost
 POSTGRES_TCP_PORT = 5432
 SPRING_DATASOURCE_PASSWORD = "your password to postgres"
 
+Run the SQL script provided in the folder main/scripts in eg pgAdmin or a console.
 
 * Download the project
 * Reload Maven project

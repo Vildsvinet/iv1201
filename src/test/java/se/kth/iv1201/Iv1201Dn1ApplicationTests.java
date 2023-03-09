@@ -11,4 +11,14 @@ class Iv1201Dn1ApplicationTests {
 
 	}
 
+	@Test
+	void test() {
+
+	}
+	//test to test creating a user
+	@Test
+	void testCreateUser() {
+
+	}
+
 }

@@ -9,7 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import se.kth.iv1201.application.RecruitmentService;
-import se.kth.iv1201.domain.IllegalDatabaseAccessException;
+import se.kth.iv1201.exceptions.IllegalDatabaseException;
 import se.kth.iv1201.domain.Person;
 import se.kth.iv1201.domain.PersonDTO;
 import se.kth.iv1201.presentation.forms.CreateUserForm;
@@ -87,6 +87,10 @@ public class PersonController {
         return CREATE_USER_PAGE_URL;
     }
 
+    public static final String USERNAME_EXISTS_PARAM = "usernameExists";
+    public static final String USERNAME_EXISTS_MESSAGE = "Username already exists.";
+    public static final String DATABASE_ERROR_PARAM = "databaseError";
+    public static final String DATABASE_ERROR_MESSAGE = "Database error.";
     /**
      * Endpoint for handling the submission and validation of the form entered by the user.
      * Hard codes that every user created through the form becomes an applicant by setting role_id = 2.
@@ -94,24 +98,25 @@ public class PersonController {
      * @param bindingResult Used for checking validation errors.
      * @param m Used for binding attributes to the view that can be rendered.
      * @return  returns the form with status messages.
-     * @throws IllegalDatabaseAccessException thrown whenever business logic of action is not permitted.
+     * @throws IllegalDatabaseException thrown whenever business logic of action is not permitted.
      */
     @PostMapping("/" + CREATE_USER_PAGE_URL)
-    public String createUser(@Valid CreateUserForm createUserForm, BindingResult bindingResult, Model m) throws IllegalDatabaseAccessException {
+    public String createUser(@Valid CreateUserForm createUserForm, BindingResult bindingResult, Model m) throws IllegalDatabaseException {
         if(bindingResult.hasErrors()){
             m.addAttribute("createUserForm", createUserForm);
             return CREATE_USER_PAGE_URL;
         }
-
         int role_id = 2;
         try {
             person = service.createPerson(createUserForm.getName(), createUserForm.getSurname(), createUserForm.getPnr(), createUserForm.getEmail(), createUserForm.getPassword(), role_id, createUserForm.getUsername());
-        } catch(Exception e){
+        } catch(IllegalDatabaseException e){
             if(e.getMessage().equals("Username already exist.")) {
-                m.addAttribute("userNameError", "Username already exists.");
-            } else
-                m.addAttribute("error", "Something went wrong. Try again later.");
-            return CREATE_USER_PAGE_URL;
+                m.addAttribute("userNameError", USERNAME_EXISTS_MESSAGE);
+                return CREATE_USER_PAGE_URL;
+            } else {
+                System.out.println(e.getMessage());
+                throw new IllegalDatabaseException(e.getMessage());
+            }
         }
         m.addAttribute("success", "Registration successful!");
         return CREATE_USER_PAGE_URL;
@@ -124,7 +129,6 @@ public class PersonController {
      */
     @GetMapping("/" + APPLICATIONS_URL)
     public String showAllApplications(Model m) {
-        // TODO service call to getALL applications
         List<Person> applications = service.getAllApplications();
         m.addAttribute("applications", applications);
         return APPLICATIONS_URL;

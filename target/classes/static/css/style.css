@@ -1,8 +1,83 @@
-label {
-    display: none;
+
+header{
+    text-align: center;
+    /*background-color: darkgreen;*/
+    /*make this a cool header font*/
+    font-family: 'acme', fantasy;
+    color: darkgreen;
+    font-size: 2em;
+}
+header h1{
+    font-family: 'acme', fantasy;
 }
 
-/*header{*/
-/*    background-color: darkgreen;*/
-/*    color: aquamarine;*/
-/*}*/
+header .heading{
+    /*padding: 5px;*/
+}
+
+/*change the font family of the entire app*/
+/*make bgimage.jpg the background image of the entire app*/
+body{
+    font-family: 'Roboto', sans-serif;
+    background-color: darkgreen;
+    background-image: url("/images/bgimage.jpg");
+    background-position: center;
+    background-size: cover;
+    min-height: 100vh;
+    font-weight: bold;
+    overflow: hidden;
+}
+
+main{
+    padding-left: 10vw;
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+    padding-right: 10vw;
+    max-height: 100vh;
+    background-color: rgba(0, 255, 34, 0.14);
+    text-align: center;
+    overflow: auto;
+    scroll-behavior: initial;
+}
+
+table{
+    margin: auto;
+    border: 2px solid aquamarine;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 1.2em;
+    background-color: rgba(0, 255, 34, 0.14);
+    text-align: center;
+    text-after-overflow: ellipsis;
+    color: #f1f0f5;
+}
+
+table tbody tr td{
+    padding: 5px;
+    font-weight: normal;
+}
+
+
+/*Make all buttons in the app look nice*/
+button{
+    background-color: darkgreen;
+    color: aquamarine;
+    border: 2px solid aquamarine;
+    border-radius: 5px;
+    padding: 1vh;
+    font-size: 1.2em;
+}
+
+form {
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+}
+
+.errorText {
+    color: red;
+    font-weight: normal;
+}
+.error{
+    color: red;
+    font-weight: normal;
+}

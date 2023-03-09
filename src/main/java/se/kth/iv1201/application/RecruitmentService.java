@@ -6,7 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import se.kth.iv1201.domain.IllegalDatabaseAccessException;
+import se.kth.iv1201.exceptions.IllegalDatabaseException;
 import se.kth.iv1201.domain.Person;
 import se.kth.iv1201.domain.PersonDTO;
 import se.kth.iv1201.repository.PersonRepository;
@@ -42,12 +42,12 @@ public class RecruitmentService {
      * @param role_id   whether the created user should be a recruiter (1) or an applicant (2)
      * @param username  chosen username
      * @return A DTO of what is saved in the repository/database
-     * @throws IllegalDatabaseAccessException   If the username is already occupied
+     * @throws IllegalDatabaseException   If the username is already occupied
      */
-    public PersonDTO createPerson(String name, String surname, String pnr, String email, String password, int role_id, String username ) throws IllegalDatabaseAccessException {
+    public PersonDTO createPerson(String name, String surname, String pnr, String email, String password, int role_id, String username ) throws IllegalDatabaseException {
         Optional<Person> personEntity = personRepository.findPersonByUsername(username);
         if (personEntity.isPresent()) {
-            throw new IllegalDatabaseAccessException("Username already exist.");
+            throw new IllegalDatabaseException("Username already exist.");
         }
         return personRepository.save(new Person(name, surname, pnr, email, passwordEncoder.encode(password), role_id, username));
     }

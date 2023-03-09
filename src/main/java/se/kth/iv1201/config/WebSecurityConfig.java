@@ -1,7 +1,10 @@
 package se.kth.iv1201.config;
 
+import org.hibernate.Internal;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
@@ -42,6 +45,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers("/css/style.css", "/images/**").permitAll()
                         .requestMatchers("/", "/" + LOGIN_PAGE_URL, "/" + CREATE_USER_PAGE_URL).permitAll()
                         .requestMatchers("/" + HOME_RECRUITER_URL, "/" + APPLICATIONS_URL).hasAuthority(ROLE_RECRUITER)
                         .requestMatchers("/" + HOME_APPLICANT_URL).hasAuthority(ROLE_APPLICANT)
@@ -63,10 +67,19 @@ public class WebSecurityConfig {
                             }
                             throw new IllegalStateException("User has no role assigned");
                         })
-                        .failureUrl("/" + LOGIN_PAGE_URL + "?error=true")
+//                        .failureUrl("/" + LOGIN_PAGE_URL + "?error=true")
                         .failureHandler((request, response, exception) -> {
                             request.getSession().setAttribute("username", request.getParameter("username"));
-                            response.sendRedirect("/login?error");
+                            if (exception instanceof BadCredentialsException) {
+                                response.sendRedirect("/login?badCredentials");
+                            }
+                            else if (exception instanceof InternalAuthenticationServiceException){
+                                response.sendRedirect("/login?authenticationError");
+                            }
+                            else {
+                                response.sendRedirect("/login?error");
+                            }
+
                         })
                 )
                 .logout(LogoutConfigurer::permitAll);

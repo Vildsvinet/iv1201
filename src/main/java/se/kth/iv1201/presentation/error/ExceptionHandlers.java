@@ -2,13 +2,19 @@ package se.kth.iv1201.presentation.error;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
+import org.hibernate.JDBCException;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.CannotCreateTransactionException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import se.kth.iv1201.exceptions.IllegalDatabaseException;
+
+import java.net.ConnectException;
 
 /**
  * This class is used to handle all exceptions.
@@ -18,6 +24,45 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ExceptionHandlers implements ErrorController {
     private static final String ERROR_PAGE_URL = "error";
     private static final String ERROR_TYPE = "errorType";
+    private static final String NOT_FOUND_MESSAGE = "Page not found. If you expected it to exist, please contact support.";
+    private static final String FORBIDDEN_MESSAGE = "You do not have permission to view this page! If you feel like you should, please contact support.";
+    private static final String INTERNAL_SERVER_ERROR_MESSAGE = "Something unexpected went wrong, please try again later or contact support.";
+    private static final String SERVICE_UNAVAILABLE_MESSAGE = "The service is currently unavailable, please try again later.";
+    private static final String GENERIC_ERROR_MESSAGE = "Something unexpected went wrong, please try again later or contact support.";
+    private static final String DATABASE_ERROR_MESSAGE = "The database was unreachable, please try again later or contact support.";
+    private static final String NO_HTTP_STATUS_MESSAGE = "No HTTP status code was found.";
+
+
+    /**
+     * This method is used to handle database exceptions.
+     * @param exception the exception that was thrown.
+     * @param model the model to add the error message to.
+     * @return the error page.
+     */
+    @ExceptionHandler({IllegalDatabaseException.class, JDBCException.class, CannotCreateTransactionException.class, ConnectException.class})
+    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+    public String handleDatabaseExceptions(JDBCException exception, Model model) {
+        System.out.println("JDBCException: " + exception.getMessage());
+        model.addAttribute(ERROR_TYPE, DATABASE_ERROR_MESSAGE);
+        return ERROR_PAGE_URL;
+    }
+
+    /**
+     * This method is used to handle exceptions that are thrown when a user has no or incorrect role assigned.
+     * @param exception the exception that was thrown.
+     * @param model the model to add the error message to.
+     * @return the error page.
+     */
+    @ExceptionHandler({IllegalArgumentException.class, IllegalStateException.class})
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public String handleIllegalExceptions(Exception exception, Model model) {
+        System.out.println("IllegalException: " + exception.getMessage());
+        if(exception.getMessage().contains("role"))
+            model.addAttribute(ERROR_TYPE, FORBIDDEN_MESSAGE);
+        else
+            model.addAttribute(ERROR_TYPE, GENERIC_ERROR_MESSAGE);
+        return ERROR_PAGE_URL;
+    }
 
     /**
      * This method is used to handle generic exceptions,
@@ -26,9 +71,10 @@ public class ExceptionHandlers implements ErrorController {
      * @return The generic error page.
      */
     @ExceptionHandler(Exception.class)
-    public String handleException(Exception exception, Model model) {
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public String handleGenericException(Exception exception, Model model) {
         System.out.println("Exception: " + exception.getMessage());
-        model.addAttribute(ERROR_TYPE, exception.getMessage());
+        model.addAttribute(ERROR_TYPE, GENERIC_ERROR_MESSAGE);
         return ERROR_PAGE_URL;
     }
 
@@ -36,8 +82,8 @@ public class ExceptionHandlers implements ErrorController {
     * TODO Remove this method.
      */
     @GetMapping("/forcedException")
-    public String testException() throws Exception {
-        throw new Exception("This is a test exception.");
+    public String testException() throws IllegalDatabaseException {
+        throw new IllegalDatabaseException("This is a test exception.");
     }
 
     /**
@@ -53,21 +99,22 @@ public class ExceptionHandlers implements ErrorController {
             int statusCode = Integer.parseInt(status.toString());
 
             if (statusCode == HttpStatus.NOT_FOUND.value()) {
-                model.addAttribute(ERROR_TYPE, "Page not found, try accessing a page that does exist instead. If you expected it to exist, please contact support.");
+                model.addAttribute(ERROR_TYPE, NOT_FOUND_MESSAGE);
 
             } else if (statusCode == HttpStatus.FORBIDDEN.value()) {
-                model.addAttribute(ERROR_TYPE, "Access denied. Get rekt or log in with proper access. If you are a recruiter, please contact support.");
+                model.addAttribute(ERROR_TYPE, FORBIDDEN_MESSAGE);
 
             } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-                model.addAttribute(ERROR_TYPE, "Internal server error, please contact support.");
+                model.addAttribute(ERROR_TYPE, INTERNAL_SERVER_ERROR_MESSAGE);
 
+            } else if (statusCode == HttpStatus.SERVICE_UNAVAILABLE.value()) {
+                model.addAttribute(ERROR_TYPE, SERVICE_UNAVAILABLE_MESSAGE);
             } else {
-                model.addAttribute(ERROR_TYPE, "Unhandled error, please contact support.");
-
+                model.addAttribute(ERROR_TYPE, GENERIC_ERROR_MESSAGE);
             }
         }
         else {
-            model.addAttribute(ERROR_TYPE, "HTTP Status was null, how did you even manage that? Please contact support or try again.");
+            model.addAttribute(ERROR_TYPE, NO_HTTP_STATUS_MESSAGE);
         }
 
         return ERROR_PAGE_URL;

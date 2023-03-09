@@ -4,7 +4,7 @@
       xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/viewParts/layout}">
+      layout:decorate="~{/fragments/layout}">
 <head>
     <meta charset="UTF-8"/>
     <title>Login</title>
@@ -12,22 +12,52 @@
 </head>
 <body>
 <main layout:fragment="content">
-    <h1>Login page</h1>
+    <h1>Login</h1>
     <div sec:authorize="hasRole('ROLE_APPLICANT')">
-        <a th:href="@{/homeApplicant}">Home</a>
+        <!--        <a th:href="@{/homeApplicant}">Home</a>-->
+<!--        <a th:href="@{/homeApplicant}" class="btn btn-primary" role="button"> Home</a>-->
+        <section>
+            <h1>To Home </h1>
+            <form th:action="@{/homeApplicant}" method="get">
+                <!--            <div class="row button">-->
+                <!--                <input type="submit" value="Go to login page">-->
+                <button type="submit" value="Go To Home Page">Go To Home Page</button>
+                <!--            </div>-->
+            </form>
+        </section>
+
+
+        <!--        <a th:href="@{/redirect-url}" class="btn btn-primary" role="button">Redirect</a>-->
     </div>
     <div sec:authorize="hasRole('ROLE_RECRUITER')">
-        <a th:href="@{/homeRecruiter}">Home</a>
+        <!--        <a th:href="@{/homeRecruiter}">Home</a>-->
+<!--        <a th:href="@{/homeApplicant}" class="btn btn-primary" role="button"> Home</a>-->
+        <section>
+            <h1>To Home </h1>
+            <form th:action="@{/homeRecruiter}" method="get">
+                <!--            <div class="row button">-->
+                <!--                <input type="submit" value="Go to login page">-->
+                <button type="submit" value="Go To Home Page">Go To Home Page</button>
+                <!--            </div>-->
+            </form>
+        </section>
     </div>
 
     <div sec:authorize="isAnonymous()">
         <div>
             <form th:action="@{/login}" th:object="${loginForm}" method="post">
                 <p>
-                    Please enter user credentials
+                    Please enter user credentials.
                 </p>
-                <div th:if="${param.error}">
-                    Invalid username and password.
+                <div th:if="${param.badCredentials}" class="errorText">
+                    Incorrect username or password.
+                </div>
+                <div th:if="${param.authenticationError}" class="errorText">
+                    The service could not authenticate your credentials.
+                    This might be because the database is down. Please try again later.
+                </div>
+                <div th:if="${param.error}" class="errorText">
+                    Something went wrong. Please try again or come back later.
                 </div>
                 <div th:if="${param.logout}">
                     You have been logged out.
@@ -50,9 +80,7 @@
         <div>
             <h1>Create account </h1>
             <form th:action="@{/createUser}" method="get">
-                <div class="row button">
-                    <input type="submit" value="Create Account">
-                </div>
+                <button type="submit" value="Create Account">Create Account</button>
             </form>
         </div>
     </div>
