@@ -4,12 +4,12 @@
       xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
 >
 
-<head th:replace="~{/fragments/heading::heading}">
+<head th:replace="~{fragments/heading::heading}">
     <title>Will be replaced</title>
 </head>
 
 <body>
-<header th:replace="~{/fragments/header::header}"></header>
+<header th:replace="~{fragments/header::header}"></header>
 <main layout:fragment="content"></main>
 </body>
 </html>
