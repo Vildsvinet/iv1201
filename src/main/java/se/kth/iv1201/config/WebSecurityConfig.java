@@ -54,7 +54,7 @@ public class WebSecurityConfig {
                 .formLogin((form) -> form
                         .loginPage("/" + LOGIN_PAGE_URL)
                         .permitAll()
-                        .defaultSuccessUrl(DEFAULT_PAGE_URL, false)
+//                        .defaultSuccessUrl(DEFAULT_PAGE_URL, false)
                         .successHandler((req, res, auth) -> {
                             for (GrantedAuthority authority : auth.getAuthorities()) {
                                 if (authority.getAuthority().equals(ROLE_APPLICANT)) {
@@ -62,6 +62,9 @@ public class WebSecurityConfig {
                                     return;
                                 } else if (authority.getAuthority().equals(ROLE_RECRUITER)) {
                                     res.sendRedirect("/" + HOME_RECRUITER_URL); // Redirect to recruiter home page
+                                    return;
+                                } else {
+                                    res.sendRedirect("/error"); // Redirect to error page
                                     return;
                                 }
                             }
