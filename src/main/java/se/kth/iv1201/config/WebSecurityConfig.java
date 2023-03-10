@@ -46,7 +46,7 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/css/style.css", "/images/**").permitAll()
-                        .requestMatchers("/", "/" + LOGIN_PAGE_URL, "/" + CREATE_USER_PAGE_URL).permitAll()
+                        .requestMatchers("/", "/" + LOGIN_PAGE_URL, "/" + CREATE_USER_PAGE_URL, "/error").permitAll()
                         .requestMatchers("/" + HOME_RECRUITER_URL, "/" + APPLICATIONS_URL).hasAuthority(ROLE_RECRUITER)
                         .requestMatchers("/" + HOME_APPLICANT_URL).hasAuthority(ROLE_APPLICANT)
                         .anyRequest().authenticated()
@@ -54,7 +54,7 @@ public class WebSecurityConfig {
                 .formLogin((form) -> form
                         .loginPage("/" + LOGIN_PAGE_URL)
                         .permitAll()
-                        .defaultSuccessUrl(DEFAULT_PAGE_URL, false)
+//                        .defaultSuccessUrl(DEFAULT_PAGE_URL, false)
                         .successHandler((req, res, auth) -> {
                             for (GrantedAuthority authority : auth.getAuthorities()) {
                                 if (authority.getAuthority().equals(ROLE_APPLICANT)) {
@@ -62,6 +62,9 @@ public class WebSecurityConfig {
                                     return;
                                 } else if (authority.getAuthority().equals(ROLE_RECRUITER)) {
                                     res.sendRedirect("/" + HOME_RECRUITER_URL); // Redirect to recruiter home page
+                                    return;
+                                } else {
+                                    res.sendRedirect("/error"); // Redirect to error page
                                     return;
                                 }
                             }
